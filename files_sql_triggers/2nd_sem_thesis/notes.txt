@@ -1,0 +1,8 @@
+carbon brush
+
+SQJ550B type wind turbine carbon brush	 	
+copper center carbon steel wire round brush
+
+Delete from purchase_request_details;
+
+UPDATE course SET nyears= 5 WHERE courseid = 2;
