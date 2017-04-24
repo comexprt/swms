@@ -149,9 +149,10 @@
 										 <?php foreach ($supplier as $row){ ?>
                                         <tr class="spareitems">
 											
-                                            <td class="hidden-phone"><?php echo $row->sdceno;?></td>
+                                            <td class="hidden-phone"><span style="margin-left:5%;">
+											AG67-0<?=strlen($row->supplier_name);?>-<?=$row->sdceno;?></span></td>
                                             <td>
-												<a data-toggle="modal" data-target="#<?php echo $row->sdceno;?>infoSupplier" title="Show <?php echo $row->supplier_name;?>'s Information" class="btn btn-link btn-link-modal" style="text-transform:uppercase;color:#000040;"> 
+												<a style="text-transform:capitalize;" data-toggle="modal" data-target="#<?php echo $row->sdceno;?>infoSupplier" title="Show <?php echo $row->supplier_name;?>'s Information" class="btn btn-link btn-link-modal" style="text-transform:uppercase;color:#000040;"> 
 													<?php echo $row->supplier_name;?>
 												</a>
 											</td>
@@ -251,7 +252,7 @@
 								<div class='col-md-12'>
 									<div style="margin-left:5%;margin-top:8px;">
 										<label class="pull-left" style="font-color:#000000;font-weight:bold;font-size:14px;">Dce No. </label>
-										<p class="pull-left" style="margin-left:10px;"><?php echo ": ".$row->sdceno;?><p>
+										<p class="pull-left" style="margin-left:10px;">: AG67-0<?=strlen($row->supplier_name);?>-<?=$row->sdceno;?><p>
 									</div>
 								</div>
 							</div>
@@ -296,7 +297,7 @@
 						</div>
 						
 						<div class="modal-footer">
-							<button type="button" style="font-weight:bold;font-size:13px;float:left;" class="btn btn-info" data-dismiss="modal" data-toggle="modal" data-target="#<?php echo $row->sdceno;?>editSupplier" alt="List of Spares"><i class="glyphicon glyphicon-pencil"> EDIT</i></button>
+							<button type="button" style="font-weight:bold;font-size:13px;float:left;" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#<?php echo $row->sdceno;?>editSupplier" alt="List of Spares"><i class="glyphicon glyphicon-pencil"> EDIT</i></button>
 							<button type="button" style="font-weight:bold;font-size:13px;float:right;" class="btn btn-danger" data-dismiss="modal" data-toggle="modal" data-target="#<?php echo $row->sdceno;?>deleteSupplier" alt="List of Spares"><i class="glyphicon glyphicon-trash"></i> DELETE</button>
 						</div>
 					</div>

@@ -96,8 +96,8 @@
 
 				  <li class="sub-menu">
                       <a  href="<?php echo base_url();?>WMS/Approve_Request" >
-                          <i class="glyphicon glyphicon-ok"></i>
-                          <span>Approved Spares</span>
+                           <i class="glyphicon glyphicon-check"></i>
+                          <span>GATE PASSES / SLIP</span>
                       </a>
                   </li>
 

@@ -253,6 +253,11 @@
 			$result = $query->result();
 		    return $result;  	
 		}
+		function getSpecificPurchasea($data){
+			$query = $this->db->query("select * from employee join purchase_request on employee.dceno = purchase_request.dceno where purchase_request.prid='".$data."'");		   
+			$result = $query->result();
+		    return $result;  	
+		}
 		public function Bidding_Spare_Purchase($data,$data1){
 			$query = $this->db->query("select * from spare_purchase join bidding on spare_purchase.spid = pr_date where pr_date= '".$data."' and bidding.bid= '".$data1."'");		   
 			$result = $query->result();
@@ -561,13 +566,39 @@
 			$query = $this->db->query("update purchase_request_details set qty = '".$data."' where prid ='".$data1."' AND wsid ='".$data2."'");		   
 		}
 		
-		function updatestatuspurchaserequest($data,$data1,$data2){	
-			$query = $this->db->query("update purchase_request set status = '".$data."',person_responsible = '".$data1."',date_status_changed = current_timestamp where prid ='".$data2."' ");		   
+		function updatestatuspurchaserequest($data,$data1,$data2,$data3,$data4){	
+			$query = $this->db->query("update purchase_request set status = '".$data."',person_responsible = '".$data1."',remark = '".$data3."',dceno = '".$data4."',date_status_changed = current_timestamp where prid ='".$data2."' ");		   
 		}
 		
-		function updatestatuspurchaserequest($data,$data1,$data2){	
-			$query = $this->db->query("update purchase_request set status = '".$data."',person_responsible = '".$data1."',date_status_changed = current_timestamp where prid ='".$data2."' ");		   
+		public function getEndUserEmployee(){
+			$query = $this->db->query("select * from employee where user_access_level = 4 order by lname");		   
+			$result = $query->result();
+		    return $result;  		
 		}
+		
+		public function getLastBid(){
+			$query = $this->db->query("select * from bidding order by bid desc");		   
+			$result = $query->result();
+		    return $result;  		
+		}
+		
+		public function update_on_bid($data,$data1){	
+			$query = $this->db->query("update purchase_request set status = 'on bid',person_responsible='".$data1."'	 where prid ='".$data."'");		   
+		}
+		
+		public function set_bid($data,$data1,$data2,$data3){	
+			$query = $this->db->query("INSERT INTO bidding(date,time,venue,status,date_status_changed,person_responsible) 
+										VALUES ('".$data."','".$data1."','".$data2."','pending',current_date,'".$data3."')");		   
+		}
+		
+		public function set_bid_details($data,$data1,$data2,$data3,$data4){	
+			$query = $this->db->query("INSERT INTO bidding_details(bid,prid,wsid,sdceno,quotation,status,qty) 
+										VALUES (".$data.",".$data1.",".$data2.",".$data3.",0,'pending',".$data4.")");		   
+		}
+		
+		//function updatestatuspurchaserequest($data,$data1,$data2){	
+			//$query = $this->db->query("update purchase_request set status = '".$data."',person_responsible = '".$data1."',date_status_changed = current_timestamp where prid ='".$data2."' ");		   
+		//s}
 		/************************************************           E        N          D       ****************************************/
 
 

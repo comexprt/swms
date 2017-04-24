@@ -80,58 +80,7 @@
               	  <h3 class="centered" style="text-transform:uppercase;"><?php echo $Enduser_Name;?><br><i class="title-position" ><?php echo $Position;?></i></h3>
               	  
                   <li class="sub-menu">
-                      <a href="<?php echo base_url();?>WMS/Homepage">
-                          <i class="fa fa-database"></i>
-                          <span>Spares Inventory</span>
-                      </a>
-                     
-                  </li>
-
-				 <li class="sub-menu">
-                      <a href="javascript:;">
-                          <i class="fa fa-envelope" aria-hidden="true" ></i>
-                          <span>Spares Request</span>
-				      </a>
-                 
-					  <ul class="sub">
-                          <li><a href="<?php echo base_url();?>WMS/Spare_Request">Pending
-						  <span class="label label-theme pull-right"  style="margin-right:55%;font-size:10px;">
-						  <?php foreach ($getallpendingSpareRequestCount as $row){
-							echo $row->count;
-						  }
-						  ?></span>
-						  </a>
-						  </li>
-                          <li><a href="<?php echo base_url();?>WMS/Request_Approved">Release
-						  </a>
-						  </li>
-                      </ul>
-                  </li>
-				  
-				  <li class="sub-menu">
-                      <a href="javascript:;" class="active">
-                          <i class="fa fa-shopping-cart" aria-hidden="true" ></i>
-                          <span>Purchase Request</span>
-				
-                      </a>
-					  
-                      <ul class="sub">
-                          <li ><a href="<?php echo base_url();?>WMS/Spare_Purchases">Pending
-						  <span class="label label-theme pull-right"  style="margin-right:55%;font-size:10px;">
-						  <?php foreach ($getallpendingPurchaseRequestCount as $row){
-							echo $row->count;
-						  }
-						  ?></span>
-						  </a>
-						  </li>
-                          <li class="active"><a href="<?php echo base_url();?>WMS/Spare_Purchases_Approved">Approved
-						  </a>
-						  </li>
-                      </ul>
-                  </li>
-				  
-                  <li class="sub-menu">
-                      <a href="<?php echo base_url();?>WMS/Purchase_Order">
+                      <a href="<?php echo base_url();?>WMS/Bidding" class="active">
                           <i class="fa fa-sort-amount-desc"></i>
                           <span>Bidding</span>
                       </a>
@@ -144,22 +93,6 @@
                       </a>
                   </li>
                   
-					<li class="sub-menu">
-                      <a href="<?php echo base_url();?>WMS/Purchase_Order">
-                          <i class="fa fa-truck"></i>
-                          <span>Delivery</span>
-                      </a>
-                  </li>
-                  
-				  <li class="sub-menu">
-                      <a href="<?php echo base_url();?>WMS/PO_Reports">
-                         <i class="glyphicon glyphicon-stats"></i>
-                          <span>Statistics</span>
-                      </a>
-                  </li>
-                  
-
-
                 </ul>
               <!-- sidebar menu end-->
           </div>
@@ -171,8 +104,8 @@
       <!--main content start-->
       <section id="main-content">
         <section class="wrapper site-min-height">
-          	<h4><i class="glyphicon glyphicon-file"></i><a href="<?php echo base_url();?>WMS/Spare_Purchases_Approved" title="List of Spare Request" style="color:#004D40;padding-left:5px;font-size:15px;">Purchase Request</a>
-			<i class="fa fa-angle-double-left" style="padding-left:5px;"></i><a style="color:#004D40;padding-left:5px;font-size:16px;">Approved</a></h4>
+          	<h4><i class="fa fa-sort-amount-desc	"></i><a href="<?php echo base_url();?>WMS/Bidding" title="List of Bidding PR" style="color:#004D40;padding-left:5px;font-size:15px;">Bidding PR</a>
+			</h4>
           	<div class="row mt">
           		<div class="col-lg-12">
 					<div class="col-lg-12">
@@ -185,7 +118,7 @@
 							<!-- Nav tabs -->
 							<ul class="nav nav-tabs">
 																
-								<li class="active"><a href="#Requested" data-toggle="tab">Approved</a>
+								<li class="active"><a href="#Requested" data-toggle="tab">List Of PR</a>
 								</li>
 							
 							</ul>
@@ -195,7 +128,6 @@
 							
 								
 								<div class="tab-pane fade in active" id="Requested">
-									<h5><center>List of Approved</center></h5>
 									 <div class="panel-body">
                             <div class="dataTable_wrapper">
                                 <table class="table table-striped table-advance table-hover" id="dataTables-Requested">
@@ -205,7 +137,7 @@
                                             <th class="hidden-phone"><center>PR No.</center></th>
 											<th class="hidden-phone" ><i class="fa fa-calendar" style="margin-left:12%;"></i> DATE CREATED</th>
 											<th class="hidden-phone" ><i class="fa fa-calendar" style="margin-left:5%;"></i> REQUISITIONER</th>
-                                            <th><center><i class="glyphicon glyphicon-user"></i>STATUS</center></th>
+                                            <th><center><i class="glyphicon glyphicon-stats"></i> ON BID</center></th>
 											  <th><center><i class="fa fa-eye"></i> VIEW</center></th>
 											</tr>
                                     </thead>
@@ -232,17 +164,24 @@
                                             <td style="text-transform:uppercase;"><span style="margin-left:10%;"><?=$row->fname[0].".".$row->mname[0]." ".$row->lname;?></span></td>
                                             <td class="hidden-phone"><center>
 											<?php if ($row->status == 'approved'){ ?>
-											<span class="label label-success" style="text-transform:capitalize;font-size:12px;"><?php echo $row->status; ?></span>
+											<span class="label label-default" style="text-transform:capitalize;font-size:12px;">NOT SET</span>
 											<?php }else{ ?>
 											<span class="label label-danger" style="font-size:12px;"><?php echo $row->status; ?></span>
 											<?php } ?>
 											</center></td>
                                             
-                                            <td><center><form method="post" action="<?php echo base_url();?>WMS/Spare_Purchases_Approved_Info">
+                                            <td><center>
+											<?php if ($row->status == 'approved'){ ?>
+												<a  class="btn btn-success btn-xs" title="Set bidding" data-toggle="modal" data-target="#<?php echo $row->prid;?>update">
+													<i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+													</a>
+											<?php }else{ ?>
+											<form method="post" action="<?php echo base_url();?>WMS/Bidding_Info">
 												<input  type="hidden" value="<?php echo $row->prid;?>" name="prid">
-												<button type="submit"  class="btn btn-success btn-xs" style="text-decoration:none;"> 
+												<button type="submit"  class="btn btn-default btn-xs" style="text-decoration:none;"> 
 													<i style='font-size:12px;' class='fa fa-share' aria-hidden='true'></i>
 												</button></form>
+											<?php } ?>
 											</center></td>
 								
                                         </tr>
@@ -275,6 +214,61 @@
 
 
 	  
+	  <?php foreach ($Draftp as $row){
+		$lastSpId = $row->prid;
+		if($lastSpId < 10){
+		$a = "00$lastSpId";
+		}else if ($lastSpId >= 10 && $lastSpId < 100){
+		$a = "0$lastSpId";
+		}
+		$date=date('Y', strtotime($row->date));
+		$b=substr($date,2);
+	  ?>			
+			<div class="modal fade" id="<?php echo $row->prid;?>update" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog" style="width:25%;">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						    <p class="modal-title" id="myModalLabel" style="font-size:14px;">Confirmation Message</p>
+						</div>
+						<div class="modal-body" style="font-size:16px;color:#00271D;font-weight:bold;">
+							<div class="row">
+																
+								<div class='col-md-12'>
+								 <?php echo form_open("WMS/addonbid");?>	
+								 <p style="font-weight:bold;font-size:14px;">Setting Up PR : AG67-PR<?php echo $b."-".$a;?> On Bid ... </p>
+								<input  type="hidden" value="<?php  echo $row->prid;?>" name="prid">
+								<input  type="hidden" value="<?php  echo $row->date;?>" name="prid_date">
+					
+								<input  type="hidden" value="<?=$Enduser_Name;?>" name="responsible_person">
+									<!--label	style="font-size:14px;font-weight:bold">Venue : </label>
+									<input class="form-control" type="text" name="venue" required/>
+									<br>
+									
+									<label	style="font-size:14px;font-weight:bold">Date : </label>
+									<input class="form-control" type="date" name="date" required/>
+									<br>
+									
+									<label	style="font-size:14px;font-weight:bold">Time : </label>
+									<input class="form-control" type="time" name="time" required/-->
+									
+								</div>
+							</div> <!--end row-->
+						</div>	
+						<div class="modal-footer">
+							<?php //registration button
+								
+									echo form_submit("loginSubmit","Confirm","class='btn btn-primary'");
+									echo form_close();
+							?>
+						</div>
+						
+					
+					</div>
+				</div>
+			</div>
+<?php }?>
+
 	  
 	  
 	  

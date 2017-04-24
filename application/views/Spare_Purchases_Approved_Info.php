@@ -21,9 +21,20 @@
 	
 	
 	<style>
+		
 		.tech a:hover{
 			text-decoration:underline;
 		}
+		.print {display:none;}
+	
+		@media print
+		{
+		.noprint {display:none;}
+		.close {display:none;}
+		.print {display:inline;}
+		.printthis {margin-top:-50px;}
+		}
+		@page {size: 8.5in 11in;size : portrait;}
 	</style>
 
     <link href="<?php echo base_url();?>_assets/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
@@ -47,7 +58,7 @@
       TOP BAR CONTENT & NOTIFICATIONS
       *********************************************************************************************************************************************************** -->
       <!--header start-->
-      <header class="header black-bg">
+      <header class="header black-bg noprint">
               <div class="sidebar-toggle-box">
                   <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
               </div>
@@ -75,7 +86,7 @@
       MAIN SIDEBAR MENU
       *********************************************************************************************************************************************************** -->
       <!--sidebar start-->
-      <aside>
+      <aside class="noprint">
           <div id="sidebar"  class="nav-collapse ">
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
@@ -120,7 +131,7 @@
                       </a>
 					  
                       <ul class="sub">
-                          <li class="active"><a href="<?php echo base_url();?>WMS/Spare_Purchases">Pending
+                          <li><a href="<?php echo base_url();?>WMS/Spare_Purchases">Pending
 						  <span class="label label-theme pull-right"  style="margin-right:55%;font-size:10px;">
 						  <?php foreach ($getallpendingPurchaseRequestCount as $row){
 							echo $row->count;
@@ -128,7 +139,7 @@
 						  ?></span>
 						  </a>
 						  </li>
-                          <li><a href="<?php echo base_url();?>WMS/Spare_Purchases_Approved">Approved
+                          <li class="active"><a href="<?php echo base_url();?>WMS/Spare_Purchases_Approved">Approved
 						  </a>
 						  </li>
                       </ul>
@@ -175,8 +186,8 @@
       <!--main content start-->
       <section id="main-content">
         <section class="wrapper site-min-height">
-          	<h4><i class="fa fa-tasks"></i><a style="color:#004D40;padding-left:5px;">Transactions</a><i class="fa fa-angle-double-left" style="padding-left:5px;">
-			</i><a style="color:#004D40;padding-left:5px;font-size:16px;" href="<?php echo base_url();?>WMS/Spare_Purchases" title="back to list">Purchase Request</a></i>
+          	<h4 class="noprint"><i class="fa fa-tasks"></i><a style="color:#004D40;padding-left:5px;">Transactions</a><i class="fa fa-angle-double-left" style="padding-left:5px;">
+			</i><a style="color:#004D40;padding-left:5px;font-size:16px;" href="<?php echo base_url();?>WMS/Spare_Purchases_Approved" title="back to list">Purchase Request</a></i>
 			<i class="fa fa-angle-double-left" style="padding-left:5px;">
 			<?php foreach ($DraftInfo as $row){ ?>
 			<a style="color:#004D40;padding-left:5px;font-size:16px;"><?php echo $row->status;?></a></i>
@@ -197,55 +208,37 @@
 			</h4>
           	<div class="row">
           		<div class="col-lg-12">
-				<div class='form-group'>
-							  <a><center style="font-size:14px;font-weight:bold;"><?php echo $message;?></center></a>							
-							</div>
 					
 			<?php }?>
-						<div style="width:90%;margin-left:5%;">
+								<div class="col-lg-12 noprint" style="margin-top:1%;"><div class='form-group pull-right' >
+								<a style='font-size:16px;color:#004030;cursor:pointer;border:1px solid #004D40;' title='Print' class='btn btn-md' 
+								onClick="window.print()"><i class='fa fa-print pull-right'> PRINT</i></a></div></div>
+						<div class='form-group printthis'>
+							<img class="print" src="<?php echo base_url();?>/_assets/img/NPC.png" width="28%">				  
+							<center style="font-size:18px;font-weight:bold;font-color:#000000;">PURCHASE REQUISTION SLIP</center>
+						</div>
+						
+						<div style="width:90%;margin-left:5%;text-transform:capitalize;font-size:12px;">
 							<?php foreach ($DraftInfo as $row){ ?>
 							
 								<div class="row mt">
-								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 spare-info spare-info1">
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 									
-										<div class="spare-left-purpose">
-											<label><p>Requisitioning Section</p></label>
-										</div>
-										<div class="spare-right-purpose">
-											<p>: AGUS 6/7 HE PLANT<p>
+										<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" >
+											<label><p style="font-weight:bold;">Requisitioning Section : AGUS 6/7 HE PLANT</p></label>
 										</div>
 										
-										
-								</div><!-- col-lg-4 -->
-								
-								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 spare-info spare-info1">
-									
-										<div class="spare-left-purpose">
-											<label><p>Cost Centre Number</p></label>
-										</div>
-										<div class="spare-right-purpose">
-											<p>: 60004<p>
-										</div>
-										
-										
-								</div><!-- col-lg-4 -->
-									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 spare-info spare-info1">
-										
-										<div class="spare-left-purpose">
-											<label>Date Created <p></label>
-										</div>
-										<div class="spare-right-purpose">
-											<p>: 
+										<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-right">
+											<label><p style="font-weight:bold;">Date Prepared : : 
 											<?php 
 												$purpose = $row->remark;
 												echo date('F m, Y h:i A', strtotime($row->date));
-											?>
-											<p>
+											?></p></label>
 										</div>
-										
-										
+										<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" >
+											<label><p style="font-weight:bold;">Cost Centre Number : 60004</p></label>
+										</div>	
 								</div><!-- col-lg-4 -->
-								
 								
 								
 							<?php }?>
@@ -253,7 +246,7 @@
 						
 						<!-- /.panel-body -->
 				 
-				</div><!--/end col -->
+					</div><!--/end col -->
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 spare-info spare-info1" style="margin-top:10px;">
 										 <table class="table table-striped  table-hover  table-bordered" >
                                     <thead>
@@ -289,9 +282,7 @@
 											
 											<td style="border:1px solid #24665B;"><p><center>
 											<span style="font-weight:bold;font-size:12px;"><?php echo $row->qty;?>
-											<a href="#" data-toggle="modal" data-target="#<?php echo $row->wsid;?>qty">
-											<i class="glyphicon glyphicon-pencil" style="padding-left:5%;font-size:13px;"></i>
-											</a>
+											
 											</span></center></p></td>
 											
 											<td  style="border:1px solid #24665B;"><p>
@@ -324,9 +315,15 @@
 										?>
 										<tr style="font-size:13px;font-weight:bold;">
 											<td colspan="4">
-											<center style="padding-top:4%;"> - - - NOTHING FOLLOWS - - -
+											<center style="padding-top:4%;"><p> - - - x - x - x - - -</p>
 											</center>
+											<div  class="print">
+											<p>Included in CY <?php echo date('Y',time());?> PPMP :</p>
+											<p>Item # :</p>
+											<p>Page # :</p><br></br>
+											<p style="font-weight:bold;font-size:14px;"><?php foreach ($getppmp as $row){ echo $row->value;}?><br>PPMP Officer, AGUS 6/7 HEPC</p>
 											</td>
+											</div>
 											
 											<td>
 											<p class="text-right">Total <br><?=$vat;?> Vat</p>
@@ -355,19 +352,52 @@
 								</table>
 						</div><!-- col-lg-4 total -->
 						
-						<?php foreach ($DraftInfo as $row){ ?>	
 						
-						<?php if($row->status == 'Approved'){ ?>
-							<a class="btn btn-xs" style="border:1px solid #D90000;font-size:20px;font-weight:bold;float:right;color:#D90000;margin-right:1%;" title="Cancel Approved Purchase Request" data-toggle="modal" data-target="#">
-							<i class="fa fa-undo" aria-hidden="true"></i><code style="background-color:#FFFFFF;color:#D90000;"> UNDO</code>
+						<?php foreach ($DraftInfo as $row){ ?>	
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 print" >
+						<p style="font-weight:bold;margin-left:1%;"> Purpose : <code style="font-size:12px;color:#000000;background-color:#FAFAFA;text-decoration:underline;"><?=$row->remark;?></code></p>
+						</div>
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 print" style="margin-top:1%;">
+							<div style="width:100%;height:2px;background-color:#24665B;">
+							</div>
+						</div><!-- col-lg-4 -->
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 print" style="margin-top:1%;font-weight:bold;">
+							<div  class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+							<p>PR Requested by : </p>
+							</div>
+							
+							<div  class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+							<p>Approved / Disapproved for PR by : </p>
+							</div>
+						</div><!-- col-lg-4 -->
+						
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 print" style="margin-top:1%;">
+							<div  class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+							<p><center style="text-transform:capitalize"><?=$row->fname[0].".".$row->mname[0]." ".$row->lname;?><br>( Signature over printed name )</center></p>
+							</div>
+							
+							<div  class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+							<p><center style="text-transform:capitalize"><?php foreach ($getOicOfficer as $row1){echo $row1->value;}?><br>Plant Manager, AGUS 6/7 HEPC</center></p>
+							</div>
+						</div><!-- col-lg-4 -->
+						
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 print" style="margin-top:1%;font-weight:bold;">
+							<p style="font-size:10px;">(Note : Approved of Pre-Purchase Request Slip must be attached to NPC PR form effective August 01, 1998 and still subject to PR flow proccess)</p>
+						</div><!-- col-lg-4 -->
+						
+						
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 noprint">
+						
+						<?php if($row->status == 'approved'){ ?>
+							<a class="btn btn-xs" style="border:1px solid #D90000;font-size:20px;font-weight:bold;float:right;color:#D90000;margin-right:1%;" title="Cancel Approved Purchase Request" data-toggle="modal" data-target="#<?php echo $row->prid;?>update">
+							<code style="background-color:#FFFFFF;color:#D90000;"> Cancel</code>
 							</a>
-						<?php }else{ ?>
+						<?php }elseif ($row->status == 'on bid'){}else{ ?>
 							<a class="btn btn-xs" style="border:1px solid #003428;font-size:20px;font-weight:bold;float:right;color:#003428;margin-right:1%;" title="Approved Purchase Request" data-toggle="modal" data-target="#<?php echo $row->prid;?>update">
 							<i class="glyphicon glyphicon-check" aria-hidden="true"></i><code style="background-color:#FFFFFF;color:#003428;">APPROVED</code>
 							</a>
 						<?php } ?>
-								<p style="font-size:12px;font-weight:bold;">NOTE :</p>
-								<p style="font-size:10px;font-weight:bold;"><i class="glyphicon glyphicon-pencil" style="font-size:15px;"></i> - To edit quantity to be purchase</p>
+								
 										
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 spare-info spare-info1 spare-new-left-button" style="margin-top:1%;">
 							<div style="width:100%;height:2px;background-color:#24665B;">
@@ -375,7 +405,7 @@
 						</div><!-- col-lg-4 -->
 						
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 spare-info spare-info1 spare-new-left-button" style="margin-top:20px;">
-							<h4 style="float:left;font-weight:bold;margin-top:4px;width:130px;">Evaluation  </h4><button style="font-size:15px;border-radius:8px;float:left;" title="Evaluation">
+							<h4 style="float:left;font-weight:bold;margin-top:4px;width:130px;">Evaluation  </h4><button style="text-transform:capitalize;font-size:15px;border-radius:8px;float:left;" title="Evaluation">
 							<?=$row->status;?>
 							</button>
 						</div><!-- col-lg-4 -->
@@ -399,8 +429,14 @@
 							?>
 							</button>
 						</div><!-- col-lg-4 -->
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 spare-info spare-info1 spare-new-left-button" style="margin-top:5px;">
+							<h4 style="float:left;font-weight:bold;margin-top:4px;width:130px;">Requisitioner  </h4><button style="text-transform:capitalize;font-size:15px;border-radius:8px;float:left;" title="Responsible Person">
+							<?=$row->fname[0].".".$row->mname[0]." ".$row->lname;?>
+							</button>
+						</div><!-- col-lg-4 -->
 							<?php } ?>
 					
+				</div> <!-- /end row -->
           	</div> <!-- /end row -->
 			
 		</section><!--/wrapper -->
@@ -414,7 +450,7 @@
 					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-						    <p class="modal-title" id="myModalLabel">Approving Purchase Request ...</p>
+						    <p class="modal-title" id="myModalLabel">Confirmation Message</p>
 						</div>
 						<div class="modal-body" style="font-size:16px;color:#00271D;font-weight:bold;">
 							<div class="row">
@@ -423,22 +459,15 @@
 								 <?php echo form_open("WMS/updatestatus");?>	
 								 
 								<input  type="hidden" value="<?php  echo $row->prid;?>" name="prid">
-								<input  type="hidden" value="approved" name="status">
+								<input  type="hidden" value="pending" name="status">
 								<input  type="hidden" value="<?=$Enduser_Name;?>" name="responsible_person">
+								<input  type="hidden" value="" name="remarks">
+								<input  type="hidden" value="1" name="dceno">
+								
 									<label	style="font-size:14px;font-weight:bold">
-										Select Requisitioner :
-									</label>
-										  <select class="form-control" name="dceno"  style="font-size:13px;text-transform:capitalize;" required>  
-												<?php foreach ($getEndUserEmployee as $row){ ?>
-												<option value="<?=$row->dceno;?>"><?=$row->lname.", ".$row->fname." ".$row->mname[0].". -  ".$row->requisitioning_section;?></option>
-												<?php } ?>
-										</select>
-										<br>
-									<label	style="font-size:14px;font-weight:bold">
-										Purpose :
+										Are you sure you want to Cancel the Approved Purchase Request ? 
 									</label>
 									
-									<textarea class="form-control" name="remarks" placeholder="Text Here ..." rows="4" required></textarea>
 										
 								</div>
 							</div> <!--end row-->
@@ -446,7 +475,7 @@
 						<div class="modal-footer">
 							<?php //registration button
 								
-									echo form_submit("loginSubmit","OK","class='btn btn-primary'");
+									echo form_submit("loginSubmit","Yes","class='btn btn-danger'");
 									echo form_close();
 							?>
 						</div>
@@ -458,58 +487,10 @@
 <?php }?>
 
 
-	<?php foreach ($PurchaseInfo as $row){?>			
-			<div class="modal fade" id="<?php echo $row->wsid;?>qty" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog" style="width:25%;">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-						    <p class="modal-title" id="myModalLabel">Edit Quantity</p>
-						</div>
-						
-						<div class="modal-body" style="font-size:12px;color:#00271D;">
-						    <?php echo form_open("WMS/updateprqty");?>	
-							<div class="row">
-								<input  type="hidden" value="accept-confirm" name="sms">
-								<input  type="hidden" value="<?php  echo $row->prid;?>" name="prid">
-								<input  type="hidden" value="<?php  echo $row->wsid;?>" name="wsid">
-								
-						
-								<div class='col-md-12'>
-									<div style="margin-left:1%;margin-top:8px;margin-bottom:12px;">
-										<div style="margin-left:1%;margin-top:8px;">
-										<label style="font-size:14px;font-weight:bold;text-transform:capitalize;">
-										<?=$row->category."- ".$row->spare_name;?>
-										</label>
-										<br></br>
-									<label style="font-size:13px;font-weight:bold;">Qty Purchase</label>
-										<input type="number" class="form-control"  name="qty" min="1" value="<?=$row->qty?>" required></input>
-										<br>
-									</div>
-									
-									</div>
-								</div>
-							</div> <!--end row-->
-						
-						
-					</div>
-				<div class="modal-footer">
-							<?php //registration button
-								
-									echo form_submit("loginSubmit","UPDATE","class='btn btn-success'");
-									echo form_close();
-							?>
-				</div>
-				
-			</div>
-			</div>
-			</div>
-<?php }?>
-
 
 	  
       <!--footer start-->
-      <footer class="site-footer">
+      <footer class="site-footer noprint">
           <div class="text-center centered">
               (c) 2016 - Spares Warehouse Management System
               <a href="blank.html#" class="go-top">

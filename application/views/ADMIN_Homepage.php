@@ -141,20 +141,22 @@
 											  <th class="hidden-phone"><i class="fa fa-flag"></i> Section</th>
 											</tr>
                                     </thead>
-                                    <tbody style="text-transform:uppercase;">
+                                    <tbody style="text-transform:capitalize;">
                                         
-										 <?php foreach ($user as $row){ ?>
+										 <?php foreach ($user as $row){ 
+											$pm = $row->fname[0].$row->mname[0]." ".$row->lname;
+										 ?>
                                         <tr class="spareitems">
 											
-                                            <td class="hidden-phone"><center><?php echo $row->dceno;?></center></td>
+                                            <td class="hidden-phone"><span style="margin-left:5%;">17-<?=$row->ccno;?>-<?=strlen($pm);?><?php echo $row->dceno;?></span></td>
                                             <td>
-												<a data-toggle="modal" data-target="#<?php echo $row->dceno;?>infoUser" title="Show <?php echo $row->lname;?>'s Information" class="btn btn-link btn-link-modal" style="text-transform:uppercase;color:#000040;"> 
+												<a style="text-transform:capitalize;" data-toggle="modal" data-target="#<?php echo $row->dceno;?>infoUser" title="Show <?php echo $row->lname;?>'s Information" class="btn btn-link btn-link-modal" style="text-transform:uppercase;color:#000040;"> 
 													<?php echo $row->lname." , ".$row->fname." ".$row->mname[0].".";?>
 												</a>
 											</td>
                                             <td><?php echo $row->position;?></td>
                                             <td class="hidden-phone"><center><?php echo $row->ccno;?></center></td>
-											<td class="hidden-phone"><?php echo $row->requisitioning_section;?></td>
+											<td class="hidden-phone" ><?php echo $row->requisitioning_section;?></td>
 										
                                         </tr>
 										
@@ -247,7 +249,9 @@
 			</div>
 	 
 	<!-- Modal Create Info User-->
-	 <?php foreach ($user as $row){ ?>
+	 <?php foreach ($user as $row){ 
+		$pm = $row->fname[0].$row->mname[0]." ".$row->lname;
+	 ?>
 			<div class="modal fade" id="<?php echo $row->dceno;?>infoUser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -263,7 +267,7 @@
 								<div class='col-md-12'>
 									<div style="margin-left:5%;margin-top:8px;">
 										<label class="pull-left" style="font-color:#000000;font-weight:bold;font-size:14px;">Dce No. </label>
-										<p class="pull-left" style="margin-left:10px;"><?php echo ": ".$row->dceno;?><p>
+										<p class="pull-left" style="margin-left:10px;"> : 17-<?=$row->ccno;?>-<?=strlen($pm);?><?php echo $row->dceno;?><p>
 									</div>
 								</div>
 								</div>
@@ -311,7 +315,7 @@
 						</div>
 						
 						<div class="modal-footer">
-							<button type="button" style="font-weight:bold;font-size:13px;float:left;" class="btn btn-info" data-dismiss="modal" data-toggle="modal" data-target="#<?php echo $row->dceno;?>editUser" alt="List of Spares"><i class="glyphicon glyphicon-pencil"> EDIT</i></button>
+							<button type="button" style="font-weight:bold;font-size:13px;float:left;" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#<?php echo $row->dceno;?>editUser" alt="List of Spares"><i class="glyphicon glyphicon-pencil"> EDIT</i></button>
 							<button type="button" style="font-weight:bold;font-size:13px;float:right;" class="btn btn-danger" data-dismiss="modal" data-toggle="modal" data-target="#<?php echo $row->dceno;?>deleteUser" alt="List of Spares"><i class="glyphicon glyphicon-trash"></i> DELETE</button>
 						</div>
 					</div>
@@ -331,14 +335,9 @@
 							 <?php echo form_open("WMS/editUser");?>	
 							<div class="row">
 								<input  type="hidden" name="password" value="<?php echo $row->password;?>">
-								<div class='col-md-12'>
-									<div style="margin-left:5%;margin-top:8px;">
-										<label style="font-color:#000000;font-weight:bold;font-size:14px;">Dce No.</label>
-										<br>
+					
 										<input type="hidden" class="form-control"  name="DceNoHidden" value="<?php echo $row->dceno;?>" required/>
 						
-									</div>
-								</div>
 								<div class='col-md-12'>
 									<div style="margin-left:5%;margin-top:8px;">
 										<label style="font-color:#000000;font-weight:bold;font-size:14px;" >FIST NAME</label>

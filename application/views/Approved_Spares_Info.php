@@ -30,7 +30,7 @@
 		{
 		.noprint {display:none;}
 		.close {display:none;}
-		.print {display:inline;}
+		.print {display:inline;margin-top:1%;}
 		.printthis {margin-top:-100px;}
 		}
 		@page {size: 8.5in 11in;size : portrait;}
@@ -112,8 +112,8 @@
 
 				  <li class="sub-menu">
                       <a  href="<?php echo base_url();?>WMS/Approve_Request" class="active" >
-                          <i class="glyphicon glyphicon-ok"></i>
-                          <span>Approved Spares</span>
+                           <i class="glyphicon glyphicon-check"></i>
+                          <span>GATE PASSES / SLIP</span>
                       </a>
                   </li>
 
@@ -179,10 +179,11 @@
 							?>
 							
 							<div class="printthis" style="font-weight:bold;font-size:12px;text-transform:uppercase;">	
-							<div style="height:100px;margin-top:2%;">
+							<div class="print row">
+								
 								<p class='pull-left'>REPUBLIC OF THE PHILIPPINES<br>AGUS VI / VII HEP COMPLEX <br>NATIONAL POWER CORPORATION</p>
 							</div>
-							<div >
+							<div class="row">
 								<center><p style="font-size:18px;">WAREHOUSE REQUISITION SLIP</p></center>
 							</div>
 							<p class="pull-right">DATE: <?= date('F d, Y'); ?></p>
@@ -210,7 +211,8 @@
 									 foreach ($SpareInfo as $row){ ?>
                                  <tr>
 										<td style="border:1px solid #24665B;border-bottom:1px solid #FFFFFF;"><center><?=$row->wsid;?></center></td>
-										<td style="border:1px solid #24665B;border-bottom:1px solid #FFFFFF;"><?=$row->spare_name;?></td>
+										<td style="border:1px solid #24665B;border-bottom:1px solid #FFFFFF;">
+										<p><?=$row->category.", ".$row->spare_name;?></p></td>
 										<td style="border:1px solid #24665B;border-bottom:1px solid #FFFFFF;"><center><?=$row->qty_released;?><center></td>
 										<td style="border:1px solid #24665B;border-bottom:1px solid #FFFFFF;"><center><?=$row->unit_of_measurement;?><center></td>
 										<td style="border:1px solid #24665B;border-bottom:1px solid #FFFFFF;"><center></center></td>
@@ -239,7 +241,7 @@
 									</div>
 									
 									<div class="pull-right" style="width:50%;">
-										<center><p style="font-weight:bold;text-transform:uppercase;">17-60004-0<?=strlen($rp);?><br>Employee No.</p></center>
+										<center><p style="font-weight:bold;text-transform:uppercase;">17-<?=$CcNo;?>-<?=strlen($rp);?><br>Employee No.</p></center>
 									</div>
 									</div>
 								</td>
@@ -252,7 +254,7 @@
 									</div>
 									
 									<div class="pull-right" style="width:40%;">
-										<center><p style="font-weight:bold;text-transform:uppercase;">17-60004-0<?=strlen($pm);?><br>Employee No.</p></center>
+										<center><p style="font-weight:bold;text-transform:uppercase;">17-<?=$CcNo;?>-<?=strlen($pm);?><br>Employee No.</p></center>
 									</div>
 									</div>
 								</td>
@@ -284,7 +286,7 @@
 										onClick="window.print()"><i class='fa fa-print pull-right'> PRINT</i></a></div></div>
 								
 									<div class="printthis" style="font-weight:bold;font-size:12px;text-transform:uppercase;">
-							<center><img src="<?php echo base_url();?>/_assets/img/NPC.png" width="30%"></center>
+							<img class="print" src="<?php echo base_url();?>/_assets/img/NPC.png" width="30%">
 							<center><p style="font-size:18px;">GATE PASS</p></center>
 							<p class="pull-right">DATE: <?= date('F d, Y'); ?></p>
 							<p class="pull-left">GATE PASS NO: <?=$wrid_gatepass;?></p>
@@ -450,7 +452,7 @@
 										onClick="window.print()"><i class='fa fa-print pull-right'> PRINT</i></a></div></div>
 								
 									<div class="printthis" style="font-weight:bold;font-size:12px;text-transform:uppercase;">
-							<img src="<?php echo base_url();?>/_assets/img/psalm.png" width="30%;">
+							<img class="print" src="<?php echo base_url();?>/_assets/img/psalm.png" width="30%;">
 							<center><p style="font-size:18px;">GATE PASS FORM</p></center>
 							<p class="pull-right">DATE: <?= date('F d, Y'); ?></p>
 							<p class="pull-left">GATE PASS NO: <?=$wrid_gatepass;?></p>

@@ -302,7 +302,8 @@ class WMS extends CI_Controller {
 				}else{
 					$data['message'] = "PR APPROVAL";
 				}
-			$this->load->view('PR_approval',$data);
+		
+			redirect('WMS/Bidding');
 		}elseif($this->session->userdata('other')){
 			$this->session->sess_destroy();
 			redirect('WMS');
@@ -2179,6 +2180,97 @@ class WMS extends CI_Controller {
 			}
 	
 	}
+	
+	public function Bidding(){
+
+		if($this->session->userdata('logged_PR')){
+			$session_data = $this->session->userdata('logged_PR');
+			$DceNo = $session_data['DceNo'];
+			$Fname = $session_data['Fname'];
+			$Mname = $session_data['Mname'];
+			$Lname = $session_data['Lname'];
+			$Position = $session_data['Position'];
+			$CcNo = $session_data['CcNo'];
+			$Section = $session_data['Section'];
+			//$data['message'] = "$annual RECORD HAS BEEN DELETED";
+			$data['DceNo'] = "$DceNo";
+			$data['Enduser_Name'] = "$Fname[0].$Mname[0] $Lname";
+			$data['Fname'] = $Fname[0];
+			$data['Mname'] = $Mname[0];
+			$data['Lname'] = $Lname[0];
+			$data['Position'] = "$Position";
+			$data['CcNo'] = "$CcNo";
+			$data['Section'] = "$Section";
+		    
+			
+		
+			$data['getallpendingSpareRequestCount'] = $this->model_get->getallpendingSpareRequestCount();
+			$data['getallpendingPurchaseRequestCount'] = $this->model_get->getallpendingPurchaseRequestCount();
+			// 
+			$data['Categoryp'] = $this->model_get->getCategory();
+			$data['Draftp'] = $this->model_get->getallapprovedPurchaseRequest();
+			$data['Draft1p'] = $this->model_get->getallnotpendingPurchaseRequest();
+			
+			
+			
+			$action = $this->session->flashdata('action');
+			$message = $this->session->flashdata('message');
+				if ($action=="add-spare"){
+					$data['message'] = $message;
+				}else{
+					$data['message'] = "Bidding PR";
+				}
+			
+			
+			$this->load->view('Spare_Purchases_Approved_Bid',$data);
+		}else
+			{
+				//If no session, redirect to login page
+				redirect('WMS/InvalidURL');
+			}
+	
+	}
+	
+	public function addonbid(){
+
+		if($this->session->userdata('logged_PR')){
+		  
+		$responsible_person = $this->input->post('responsible_person');
+		//$venue = $this->input->post('venue');
+		//$date = $this->input->post('date');
+		//$time = $this->input->post('time');
+		
+		
+		$prid = $this->input->post('prid');
+		$prid_date = $this->input->post('prid_date');
+		
+		$lastSpId = $prid;
+		if($lastSpId < 10){
+		$a = "00$lastSpId";
+		}else if ($lastSpId >= 10 && $lastSpId < 100){
+		$a = "0$lastSpId";
+		}
+		$date1=date('Y', strtotime($prid_date));
+		$b=substr($date1,2);
+		
+		$sms_prid = "AG67-PR<?php echo $b-$a";
+		
+		//$this->model_get->set_bid($date,$time,$venue,$responsible_person,$prid);
+		$this->model_get->update_on_bid($prid,$responsible_person);
+
+		$message="Bidding on PR : $sms_prid has been set ...";
+		$this->session->set_flashdata('message',"$message");
+		$this->session->set_flashdata('action',"add-spare");
+		redirect('WMS/Bidding');	
+			
+			//print_r($newRow);
+		}else
+			{
+				//If no session, redirect to login page
+				redirect('WMS/InvalidURL');
+			}
+	
+	}
 	// Purchase Approved
 		public function Purchase_Approved(){
 
@@ -2485,6 +2577,7 @@ public function Spare_Purchases_Info(){
 				
 				$data['getallpendingSpareRequestCount'] = $this->model_get->getallpendingSpareRequestCount();
 				$data['getallpendingPurchaseRequestCount'] = $this->model_get->getallpendingPurchaseRequestCount();
+				$data['getEndUserEmployee'] = $this->model_get->getEndUserEmployee();
 				$data['Category'] = $this->model_get->getCategory();
 				$data['getvat'] = $this->model_get->getvat();
 				
@@ -2500,27 +2593,156 @@ public function Spare_Purchases_Info(){
 	
 	}
 	
-	/*
-			update employee.. 
-			and remarkd..
+	public function Spare_Purchases_Approved_Info(){
+
+		if($this->session->userdata('logged_PO')){
+		
+			$prid1 = $this->session->flashdata('prid');	$this->session->keep_flashdata('prid1');
+			$sms = $this->session->flashdata('message');	$this->session->keep_flashdata('sms');
+			$action = $this->session->flashdata('action');	$this->session->keep_flashdata('action');
 			
-			fixed
-			/Spare_Purchases_Info  whene approved
-	*/
+			if ($action == 'qty'){
+				$prid = $prid1;
+				$data['message'] = $sms;
+			}else{
+				$prid = $this->input->post('prid');
+				$data['message'] = "Purchase Requisition";
+			}
+			
+			$session_data = $this->session->userdata('logged_PO');
+			$DceNo = $session_data['DceNo'];$Lname = $session_data['Lname'];
+			$Fname = $session_data['Fname'];$Mname = $session_data['Mname'];
+			$Position = $session_data['Position'];$Password = $session_data['Password'];
+			$Username = $session_data['Username'];$CcNo = $session_data['CcNo'];$Section = $session_data['Section'];$Access_level = $session_data['Access_level'];
+
+			$data['DceNo'] = "$DceNo";$data['CcNo'] = "$CcNo";$data['Lname'] = "$Lname";$data['Fname'] = "$Fname";$data['Mname'] = "$Mname";$data['Username'] = "$Username";
+			$data['Password'] = "$Password";$data['Section'] = "$Section";$data['Access_level'] = "$Access_level";$data['Position'] = "$Position";$data['Enduser_Name'] = "$Fname[0].$Mname[0] $Lname";
+			
+			
+				$data['PurchaseInfo'] = $this->model_get->Spare_Purchase_Details($prid);
+				$data['DraftInfo'] = $this->model_get->getSpecificPurchasea($prid);
+				
+				$data['getallpendingSpareRequestCount'] = $this->model_get->getallpendingSpareRequestCount();
+				$data['getallpendingPurchaseRequestCount'] = $this->model_get->getallpendingPurchaseRequestCount();
+				$data['getEndUserEmployee'] = $this->model_get->getEndUserEmployee();
+				$data['getppmp'] = $this->model_get->getppmp();
+				$data['getOicOfficer'] = $this->model_get->getOicOfficer();
+				$data['Category'] = $this->model_get->getCategory();
+				$data['getvat'] = $this->model_get->getvat();
+				
+				$this->load->view('Spare_Purchases_Approved_Info',$data);
 	
+			
+		 
+		}else
+			{
+				//If no session, redirect to login page
+				redirect('WMS/InvalidURL');
+			}
 	
+	}
+	
+	/* * * ** * * * * * * * * * * *  B I D D I N G *  * * * * * * * * * * * * * * * * */
+	public function Bidding_Info(){
+
+		if($this->session->userdata('logged_PR')){
+		
+			$prid1 = $this->session->flashdata('prid');	$this->session->keep_flashdata('prid1');
+			$sms = $this->session->flashdata('message');	$this->session->keep_flashdata('sms');
+			$action = $this->session->flashdata('action');	$this->session->keep_flashdata('action');
+			
+			if ($action == 'qty'){
+				$prid = $prid1;
+				$data['message'] = $sms;
+			}else{
+				$prid = $this->input->post('prid');
+				$data['message'] = "SET UP SCHEDULE ON BIDDING";
+			}
+			
+			$session_data = $this->session->userdata('logged_PR');
+			$DceNo = $session_data['DceNo'];$Lname = $session_data['Lname'];
+			$Fname = $session_data['Fname'];$Mname = $session_data['Mname'];
+			$Position = $session_data['Position'];$Password = $session_data['Password'];
+			$Username = $session_data['Username'];$CcNo = $session_data['CcNo'];$Section = $session_data['Section'];$Access_level = $session_data['Access_level'];
+
+			$data['DceNo'] = "$DceNo";$data['CcNo'] = "$CcNo";$data['Lname'] = "$Lname";$data['Fname'] = "$Fname";$data['Mname'] = "$Mname";$data['Username'] = "$Username";
+			$data['Password'] = "$Password";$data['Section'] = "$Section";$data['Access_level'] = "$Access_level";$data['Position'] = "$Position";$data['Enduser_Name'] = "$Fname[0].$Mname[0] $Lname";
+			
+			
+				$data['PurchaseInfo'] = $this->model_get->Spare_Purchase_Details($prid);
+				$data['DraftInfo'] = $this->model_get->getSpecificPurchasea($prid);
+				
+				$data['getallpendingSpareRequestCount'] = $this->model_get->getallpendingSpareRequestCount();
+				$data['getallpendingPurchaseRequestCount'] = $this->model_get->getallpendingPurchaseRequestCount();
+				$data['getEndUserEmployee'] = $this->model_get->getEndUserEmployee();
+				$data['getppmp'] = $this->model_get->getppmp();
+				$data['getAllSupplierData'] = $this->model_get->getAllSupplierData();
+				
+				$data['getOicOfficer'] = $this->model_get->getOicOfficer();
+				$data['Category'] = $this->model_get->getCategory();
+				$data['getvat'] = $this->model_get->getvat();
+				
+				$this->load->view('Bidding_Info',$data);
+	
+			
+		 
+		}else
+			{
+				//If no session, redirect to login page
+				redirect('WMS/InvalidURL');
+			}
+	
+	}
+	
+	public function addonbid_details(){
+
+		if($this->session->userdata('logged_PR')){
+		  
+		$responsible_person = $this->input->post('responsible_person');
+		$venue = $this->input->post('venue');
+		$date = $this->input->post('date');
+		$time = $this->input->post('time');
+		
+		$prid = $this->input->post('prid');
+		$wsid = $this->input->post('wsid');
+		$qty = $this->input->post('qty');
+
+		$this->model_get->set_bid($date,$time,$venue,$responsible_person);
+		$result = $this->model_get->getLastBid();
+		if($result){ $Id_array = array();foreach($result as $row){$Id_array = array( 'bid' => $row->bid);}}else{} $LastSpId = $Id_array ['bid'];
+			
+		
+		$item_array=$this->input->post('supplier');
+		$arrlength = count($item_array);
+		for($x = 0; $x < $arrlength; $x++) 
+		{
+			$this->model_get->set_bid_details($LastSpId,$prid,$wsid,$item_array[$x],$qty);
+		}
+		
+		
+		
+		$message="Schedule on Bidding has been set ...";
+		$this->session->set_flashdata('message',"$message");
+		$this->session->set_flashdata('prid',"$prid");
+		$this->session->set_flashdata('action',"add-spare");
+		redirect('WMS/Bidding');	
+		}else{ redirect('WMS/InvalidURL');}
+	
+	}
+	/* * * * * * * * * * * * * * * *     E N D   B I D D I N G  * * * * * * * * * * * * * * * * * */
 	
 public function updatestatus(){
 
 		if($this->session->userdata('logged_EU') || $this->session->userdata('logged_PO')){
 		  
-		  $prid = $this->input->post('prid');
 		  $status = $this->input->post('status');
 		  $responsible_person = $this->input->post('responsible_person');
-		  $remarks = $this->input->post('rem');
+		  $remarks = $this->input->post('remarks');
+		  $dceno = $this->input->post('dceno');
+		  $prid = $this->input->post('prid');
 		  
-			$this->model_get->updatestatuspurchaserequest($status,$responsible_person,$prid);
 			 
+			$this->model_get->updatestatuspurchaserequest($status,$responsible_person,$prid,$remarks,$dceno);
 			if ($status == 'approved'){
 				$message="Purchase Request has been Approved";
 				$this->session->set_flashdata('message',"$message");
@@ -3374,67 +3596,6 @@ public function PO_Reports(){
 	}
 	
 	
-	//PR Bidding
-	public function Bidding(){
-
-		if($this->session->userdata('logged_PR') || $this->session->userdata('logged_PO')){
-
-		  
-			$session_data = $this->session->userdata('logged_PR');
-			$DceNo = $session_data['DceNo'];
-			$Lname = $session_data['Lname'];
-			$Fname = $session_data['Fname'];
-			$Mname = $session_data['Mname'];
-			$Position = $session_data['Position'];
-			$Password = $session_data['Password'];
-			$Username = $session_data['Username'];
-			$CcNo = $session_data['CcNo'];
-			$Section = $session_data['Section'];
-			$Access_level = $session_data['Access_level'];
-
-		    
-			$data['DceNo'] = "$DceNo";
-			$data['CcNo'] = "$CcNo";
-			$data['Lname'] = "$Lname";
-			$data['Fname'] = "$Fname";
-			$data['Mname'] = "$Mname";
-			$data['Username'] = "$Username";
-			$data['Password'] = "$Password";
-			$data['Section'] = "$Section";
-			$data['Access_level'] = "$Access_level";
-			$data['Position'] = "$Position";
-			
-			$data['Enduser_Name'] = "$Fname[0].$Mname[0] $Lname";
-		    $data['Draft3'] = $this->model_get->getallbidding();
-		    
-			$action = $this->session->flashdata('action');
-		
-		  
-		  $SpId = $this->session->flashdata('SpId');
-		  $message = $this->session->flashdata('message');
-		  $this->session->keep_flashdata('SpId');
-		  $this->session->keep_flashdata('message');
-			 if ($action=="add-spare" || $action=="delete-spare" || $action=="update-spare") {
-		      //$SpId = $SpId_new_spare;
-			  $data['message']= $message;
-			  
-			  }else{
-			  
-				//$SpId = $this->input->post('SpId');
-					$data['message'] = "BIDDING";
-			  }
-				
-				$this->load->view('Bidding',$data);
-	
-			
-		 
-		}else
-			{
-				//If no session, redirect to login page
-				redirect('WMS/InvalidURL');
-			}
-	
-	}
 	
 	
 	
