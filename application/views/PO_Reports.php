@@ -21,7 +21,6 @@
 	
 	
 	
-
     <link href="<?php echo base_url();?>_assets/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
 
     <link href="<?php echo base_url();?>_assets/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
@@ -34,6 +33,204 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+	<script src="<?php echo base_url();?>graph_js/amcharts.js"></script>
+	<script src="<?php echo base_url();?>graph_js/pie.js"></script>
+	<script src="<?php echo base_url();?>graph_js/serial.js"></script>
+	<script src="<?php echo base_url();?>graph_js/export.min.js"></script>
+	<link rel="stylesheet" href="<?php echo base_url();?>graph_js/export.css" type="text/css" media="all" />
+	<script src="<?php echo base_url();?>graph_js/light.js"></script>
+	<style>
+	#chartdiv,#chartdiv1,#chartdiv2,#chartdiv3{
+		width		: 100%;
+		height		: 550px;
+		font-size	: 14px;
+		font-weight :bold;
+	}
+
+							
+	</style>
+<!-- Chart code -->
+<script>
+var chart;
+var legend;
+var selected;
+
+var types = [{
+  type: "Transformer",
+  percent: 32,
+  color: "#FDD400",
+  subs: [{
+    type: "Corrugated",
+    percent: 8
+  }, {
+    type: "Three-Phase Pad Mounted",
+    percent: 10
+  }, {
+    type: "sample transformer",
+    percent: 14
+  }]
+}, {
+  type: "Valve",
+  percent: 45,
+  color: "#D77377",
+  subs: [{
+    type: "butterfly valve",
+    percent: 25
+  }, {
+    type: "flanged ductile iron gate",
+    percent: 18
+  }, {
+    type: "sample valve",
+    percent: 7
+  }]
+}, {
+  type: "Turbine",
+  percent: 13,
+  color: "#67B7DC",
+  subs: [{
+    type: "BOCHI synchronous",
+    percent: 13
+  }]
+}, {
+  type: "Carbon Brushes",
+  percent: 10,
+  color: "#83B762",
+  subs: [{
+    type: "copper center carbon",
+    percent: 10
+  }]
+}];
+
+function generateChartData() {
+  var chartData = [];
+  for (var i = 0; i < types.length; i++) {
+    if (i == selected) {
+      for (var x = 0; x < types[i].subs.length; x++) {
+        chartData.push({
+          type: types[i].subs[x].type,
+          percent: types[i].subs[x].percent,
+          color: types[i].color,
+          pulled: true
+        });
+      }
+    } else {
+      chartData.push({
+        type: types[i].type,
+        percent: types[i].percent,
+        color: types[i].color,
+        id: i
+      });
+    }
+  }
+  return chartData;
+}
+
+AmCharts.makeChart("chartdiv", {
+  "type": "pie",
+"theme": "none",
+
+  "dataProvider": generateChartData(),
+  "labelText": "[[title]]: [[value]]",
+  "balloonText": "[[title]]: [[value]]",
+  "titleField": "type",
+  "valueField": "percent",
+  "outlineColor": "#FFFFFF",
+  "outlineAlpha": 0.8,
+  "outlineThickness": 2,
+  "colorField": "color",
+  "pulledField": "pulled",
+  "titles": [{
+    "text": "Click to see sub-category"
+  }],
+  "listeners": [{
+    "event": "clickSlice",
+    "method": function(event) {
+      var chart = event.chart;
+      if (event.dataItem.dataContext.id != undefined) {
+        selected = event.dataItem.dataContext.id;
+      } else {
+        selected = undefined;
+      }
+      chart.dataProvider = generateChartData();
+      chart.validateData();
+    }
+  }],
+  "export": {
+    "enabled": false
+  }
+});
+</script>
+
+<!-- Chart code -->
+<script>
+var chart = AmCharts.makeChart("chartdiv1",
+{
+    "type": "serial",
+    "theme": "light",
+    "dataProvider": [{
+        "name": "John",
+        "points": 10,
+        "color": "#2F4074",
+        "bullet": "<?php echo base_url();?>/_assets/img/F01.png"
+    }, {
+        "name": "Damon",
+        "points": 25,
+        "color": "#FDD400",
+        "bullet": "<?php echo base_url();?>/_assets/img/C01.png"
+    }, {
+        "name": "Patrick",
+        "points": 8,
+        "color": "#CC4748",
+        "bullet": "<?php echo base_url();?>/_assets/img/D02.png"
+    }, {
+        "name": "Mark",
+        "points": 18,
+        "color": "#67B7DC",
+        "bullet": "<?php echo base_url();?>/_assets/img/E01.png"
+    }, {
+        "name": "Mark",
+        "points": 31,
+        "color": "#448E4D",
+        "bullet": "<?php echo base_url();?>/_assets/img/H01.png"
+    }],
+    "valueAxes": [{
+        "maximum": 45,
+        "minimum": 0,
+        "axisAlpha": 0,
+        "dashLength": 4,
+        "position": "left"
+    }],
+    "startDuration": 1,
+    "graphs": [{
+        "balloonText": "<span style='font-size:13px;'>[[category]]: <b>[[value]]</b></span>",
+        "bulletOffset": 10,
+        "bulletSize": 52,
+        "colorField": "color",
+        "cornerRadiusTop": 8,
+        "customBulletField": "bullet",
+        "fillAlphas": 0.8,
+        "lineAlpha": 0,
+        "type": "column",
+        "valueField": "points"
+    }],
+    "marginTop": 0,
+    "marginRight": 0,
+    "marginLeft": 0,
+    "marginBottom": 0,
+    "autoMargins": false,
+    "categoryField": "name",
+    "categoryAxis": {
+        "axisAlpha": 0,
+        "gridAlpha": 0,
+        "inside": true,
+        "tickLength": 0
+    },
+    "export": {
+    	"enabled": false
+     }
+});
+</script>
+
   </head>
 
   <body>
@@ -115,7 +312,7 @@
 				  <li class="sub-menu">
                       <a href="<?php echo base_url();?>WMS/PO_Reports" class="active" >
                           <i class="glyphicon glyphicon-stats"></i>
-                          <span>Statics</span>
+                          <span>Graphs & Statistics</span>
                       </a>
                   </li>
                   
@@ -132,31 +329,44 @@
       <!--main content start-->
       <section id="main-content">
         <section class="wrapper site-min-height">
-          	<h4><i class="glyphicon glyphicon-stats"></i><a style="color:#004D40;padding-left:5px;">Reports</a></h4>
+          	<h4><i class="glyphicon glyphicon-stats"></i><a style="color:#004D40;padding-left:5px;">Graphs & Statistics</a></h4>
 			
-             <div id="morris">
-                  <div class="row mt">
-                      
-                      <div class="col-lg-6">
-                          <div class="content-panel">
-                              <h4 style="color:#004D40;padding-left:5px;font-size:15px;text-transform:uppercase:font-weight:bold;"> End-User Spare Withdrawal</h4>
-                              <div class="panel-body">
-                                  <div id="hero-bar" class="graph"></div>
-                              </div>
-                          </div>
-                      </div>
-					  
-					  <div class="col-lg-6">
-                          <div class="content-panel">
-                              <h4 style="color:#004D40;padding-left:5px;font-size:15px;text-transform:uppercase:font-weight:bold;"> SPARE PURCHASED STATISTICS</h4>
-                              <div class="panel-body">
-                                  <div id="hero-donut" class="graph"></div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-               
-              </div>
+				<div class="panel-bodyt">
+					<ul class="nav nav-tabs">
+						<li class="active"><a href="#a" data-toggle="tab">Spares Summary</a></li>
+						<li><a href="#b" data-toggle="tab">Annuall Cost</a></li>
+						<li><a href="#c" data-toggle="tab">Supplier's Performance</a></li>
+						<li><a href="#d" data-toggle="tab">Supplier's Performance</a></li>
+					</ul>
+
+					<div class="tab-content">
+						<div class="tab-pane fade in active" id="a">
+							<div class="panel-body">
+								<div id="chartdiv"></div>
+							</div>
+						</div>
+								
+						<div class="tab-pane fade" id="b">
+							<div class="panel-body">
+								<div id="chartdiv1"></div>
+							</div>
+						</div>	
+						
+						<div class="tab-pane fade" id="c">
+							<div class="panel-body">
+								<div id="chartdiv1"></div>
+							</div>
+						</div>	
+						
+						<div class="tab-pane fade" id="d">
+							<div class="panel-body">
+								<div id="chartdiv1"></div>
+							</div>
+						</div>	
+					</div>
+				</div>
+				<!-- /.panel-body -->
+   
 	   </section>
       <!--footer start-->
       <footer class="site-footer">
@@ -170,9 +380,7 @@
       <!--footer end-->
   </section>
 
-  <script src="<?php echo base_url();?>/_assets/assets/js/jquery.js"></script>
-
-	    <script src="<?php echo base_url();?>/_assets/assets/js/jquery.js"></script>
+ <script src="<?php echo base_url();?>/_assets/assets/js/jquery.js"></script>
     <script src="<?php echo base_url();?>/_assets/assets/js/bootstrap.min.js"></script>
     <script src="<?php echo base_url();?>/_assets/assets/js/jquery-ui-1.9.2.custom.min.js"></script>
     <script src="<?php echo base_url();?>/_assets/assets/js/jquery.ui.touch-punch.min.js"></script>
@@ -182,71 +390,9 @@
 	<script src="<?php echo base_url();?>/_assets/assets/js/datatables/metisMenu.min.js"></script>
 	<script src="<?php echo base_url();?>/_assets/assets/js/datatables/jquery.dataTables.min.js"></script>
     <script src="<?php echo base_url();?>/_assets/assets/js/datatables/dataTables.bootstrap.min.js"></script>
-	
-	
-	<script src="<?php echo base_url();?>/_assets/assets/js/raphael-min.js"></script>
-	<script src="<?php echo base_url();?>/_assets/assets/js/morris-0.4.3.min.js"></script>
 
-
-    <!--script for this page-->
-    
-  <script>
-    var Script = function () {
-
-    //morris chart
-
-    $(function () {
-      // data stolen from http://howmanyleft.co.uk/vehicle/jaguar_'e'_type
-    
-      Morris.Donut({
-        element: 'hero-donut',
-        data: [
-          {label: 'Jam', value: 25 },
-          {label: 'Frosted', value: 40 },
-          {label: 'Custard', value: 25 },
-          {label: 'Sugar', value: 10 }
-        ],
-          colors: ['#3498db', '#2980b9', '#34495e'],
-        formatter: function (y) { return y + "%" }
-      });
-
-    
-
-      Morris.Bar({
-        element: 'hero-bar',
-        data: [
-          {device: 'iPhone', Withdrawals: 136},
-          {device: 'iPhone 3G', Withdrawals: 137},
-          {device: 'iPhone 3GS', Withdrawals: 275},
-          {device: 'iPhone 4', Withdrawals: 380},
-          {device: 'iPhone 4S', Withdrawals: 655},
-          {device: 'iPhone 5', Withdrawals: 1571}
-        ],
-        xkey: 'device',
-        ykeys: ['Withdrawals'],
-        labels: ['Withdrawals'],
-        barRatio: 0.4,
-        xLabelAngle: 35,
-        hideHover: 'auto',
-        barColors: ['#ac92ec']
-      });
-
-  
-
-      $('.code-example').each(function (index, el) {
-        eval($(el).text());
-      });
-    });
-
-}();
-
-
-
-
-
-  </script>
-
-  
+    <!--common script for all pages-->
+    <script src="<?php echo base_url();?>/_assets/assets/js/common-scripts.js"></script>
 
   </body>
 </html>
