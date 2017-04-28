@@ -65,10 +65,28 @@
 		}
 		
 		function getDelivery(){
-			$query = $this->db->query("select delivery_details.ddid,warehouse_spares.category,warehouse_spares.unit_of_measurement,warehouse_spares.description, 
-										warehouse_spares.spare_name, delivery_details.wsid,delivery_details.delivery_price,delivery.date_delivered,delivery_details.qty_available 
+			$query = $this->db->query("select delivery_details.did,delivery_details.ddid,warehouse_spares.category,warehouse_spares.unit_of_measurement,
+										warehouse_spares.description,warehouse_spares.spare_name, delivery_details.wsid,delivery_details.delivery_price,delivery.date_delivered,delivery_details.qty_available 
 										from delivery join delivery_details on delivery.did = delivery_details.did join warehouse_spares on delivery_details.wsid = warehouse_spares.wsid 
 										where qty_available != 0 order by category, date_delivered DESC");		   
+			$result = $query->result();
+		    return $result;  	
+		}
+		
+		function getDeliveryDetails(){
+			$query = $this->db->query("select delivery_details.did,delivery_details.ddid,warehouse_spares.category,warehouse_spares.unit_of_measurement,warehouse_spares.description, 
+										warehouse_spares.spare_name, delivery_details.wsid,delivery_details.delivery_price,delivery.date_delivered,delivery_details.qty_available
+										,delivery_details.qty_delivered,delivery_details.qty_accepted
+										from delivery join delivery_details on delivery.did = delivery_details.did join warehouse_spares on delivery_details.wsid = warehouse_spares.wsid order by category, date_delivered DESC");		   
+			$result = $query->result();
+		    return $result;  	
+		}
+		
+		function getDeliveryDetailsS($data){
+			$query = $this->db->query("select delivery_details.did,delivery_details.ddid,warehouse_spares.category,warehouse_spares.unit_of_measurement,warehouse_spares.description, 
+										warehouse_spares.spare_name, delivery_details.wsid,delivery_details.delivery_price,delivery.date_delivered,delivery_details.qty_available
+										,delivery_details.qty_delivered,delivery_details.qty_accepted
+										from delivery join delivery_details on delivery.did = delivery_details.did join warehouse_spares on delivery_details.wsid = warehouse_spares.wsid where delivery.did='".$data."' order by category, date_delivered DESC");		   
 			$result = $query->result();
 		    return $result;  	
 		}
@@ -277,6 +295,12 @@
 			$result2 = $query->result();
 		    return $result2;  	
 		}
+		function getSectionChief(){
+			
+			$query = $this->db->query("select * from fixed_value where name='Section Chief' limit 1");		   
+			$result2 = $query->result();
+		    return $result2;  	
+		}
 		
 		function getvat(){
 			
@@ -401,7 +425,7 @@
 		
 		public function Spare_Purchase_Details($data){
 			$query = $this->db->query("select purchase_request_details.prid,purchase_request_details.wsid, category, spare_name, description, unit_of_measurement, qty, estimated_cost from purchase_request join purchase_request_details on purchase_request.prid = purchase_request_details.prid
-			join warehouse_spares on purchase_request_details.wsid = warehouse_spares.wsid where purchase_request_details.prid = '".$data."' ORDER BY category");		   
+			join warehouse_spares on purchase_request_details.wsid = warehouse_spares.wsid where purchase_request_details.prid = ".$data." ORDER BY category");		   
 			$result = $query->result();
 		    return $result;  		
 		} 
@@ -438,7 +462,7 @@
 		} 
 		
 		public function Spare_Purchase_Details_sid($data,$data1){
-			$query = $this->db->query("select * from spare_purchase_details join warehouse_spares on spare_purchase_details.wsid= warehouse_spares.wsid where warehouse_spares.wsid= '".$data."' and spare_purchase_details.spid= '".$data1."'");		   
+			$query = $this->db->query("select * from spare_purchase_details join warehouse_spares on spare_purchase_details.wsid= warehouse_spares.wsid where warehouse_spares.wsid= ".$data." and spare_purchase_details.spid= '".$data1."'");		   
 			$result = $query->result();
 		    return $result;  		
 		} 
@@ -526,12 +550,12 @@
 		}
 		
 		public function getAllFixedValueData(){
-			$query = $this->db->query("select * from fixed_value order by Value DESC");		   
+			$query = $this->db->query("select * from fixed_value order by fvid asc");		   
 			$result = $query->result();
 		    return $result;  		
-		} public 
+		} 
 		
-		function getAllEndUser(){
+		public function getAllEndUser(){
 			$query = $this->db->query("select * from employee where user_access_level = 4 order by lname");		   
 			$result = $query->result();
 		    return $result;  		
@@ -566,6 +590,10 @@
 			$query = $this->db->query("update purchase_request_details set qty = '".$data."' where prid ='".$data1."' AND wsid ='".$data2."'");		   
 		}
 		
+		function updateqtyaccepted($data,$data1){	
+			$query = $this->db->query("update delivery_details set qty_accepted = ".$data.", qty_available = ".$data." where ddid =".$data1."");		   
+		}
+		
 		function updatestatuspurchaserequest($data,$data1,$data2,$data3,$data4){	
 			$query = $this->db->query("update purchase_request set status = '".$data."',person_responsible = '".$data1."',remark = '".$data3."',dceno = '".$data4."',date_status_changed = current_timestamp where prid ='".$data2."' ");		   
 		}
@@ -577,23 +605,130 @@
 		}
 		
 		public function getLastBid(){
-			$query = $this->db->query("select * from bidding order by bid desc");		   
+			$query = $this->db->query("select * from bidding order by bid desc LIMIT 1");		   
+			$result = $query->result();
+		    return $result;  		
+		}
+		
+		public function getLastDelivery(){
+			$query = $this->db->query("select * from delivery order by did desc LIMIT 1");		   
+			$result = $query->result();
+		    return $result;  		
+		}
+		
+		public function getLastBidInfo(){
+			$query = $this->db->query("select * from bidding order by bid");		   
+			$result = $query->result();
+		    return $result;  		
+		}
+		
+		public function getAllDelivery(){
+			$query = $this->db->query("select * from delivery JOIN supplier on delivery.sdceno = supplier.sdceno order by date_delivered desc");		   
+			$result = $query->result();
+		    return $result;  		
+		}
+		
+		public function getAllDeliveryS($data){
+			$query = $this->db->query("select * from delivery JOIN supplier on delivery.sdceno = supplier.sdceno JOIN purchase_order on delivery.poid = purchase_order.poid where did = '".$data."' order by date_delivered desc");		   
+			$result = $query->result();
+		    return $result;  		
+		}
+		
+		public function getSpecificBid($data,$data1){
+			$query = $this->db->query("select * from bidding join warehouse_spares on bidding.wsid = warehouse_spares.wsid where warehouse_spares.wsid='".$data."' AND prid='".$data1."' order by bid");		   
+			$result = $query->result();
+		    return $result;  		
+		}
+		public function getSpecificBidDetails($data,$data1){
+			$query = $this->db->query("select * from bidding_details join supplier on bidding_details.sdceno = supplier.sdceno where wsid='".$data."' AND prid='".$data1."' order by quotation asc");		   
+			$result = $query->result();
+		    return $result;  		
+		}
+		public function countSpecificBidDetails($data,$data1){
+			$query = $this->db->query("select count(*) as countnotset from bidding_details where wsid='".$data."' AND prid='".$data1."' AND quotation <= 0");		   
+			$result = $query->result();
+		    return $result;  		
+		}
+		
+		public function getBidInfo(){
+			$query = $this->db->query("select bidding.bid, bidding.date as date,bidding.time,bidding.venue,bidding.status,bidding.date_status_changed, bidding.person_responsible,bidding.wsid, bidding.prid,warehouse_spares.category, warehouse_spares.spare_name,warehouse_spares.description, warehouse_spares.unit_of_measurement,purchase_request.date as prid_date from bidding join warehouse_spares on bidding.wsid = warehouse_spares.wsid join purchase_request on bidding.prid = purchase_request.prid order by bidding.date desc,bidding.time desc");		   
+			$result = $query->result();
+		    return $result;  		
+		}
+		
+		public function getPOInfo(){
+			$query = $this->db->query("select * from purchase_order join supplier on purchase_order.sdceno = supplier.sdceno order by date_approved desc");		   
+			$result = $query->result();
+		    return $result;  		
+		}
+		
+		public function getPOInfo_except1(){
+			$query = $this->db->query("select * from purchase_order join supplier on purchase_order.sdceno = supplier.sdceno where dceno IS NULL order by date_approved desc");		   
+			$result = $query->result();
+		    return $result;  		
+		}
+		
+		public function getSPOInfo($data){
+			$query = $this->db->query("select * from purchase_order join supplier on purchase_order.sdceno = supplier.sdceno where poid ='".$data."' order by date_approved desc");
+			$result = $query->result();
+		    return $result;  		
+		}
+		
+		public function getBidDetailsInfo(){
+			$query = $this->db->query("select * from bidding_details join supplier on bidding_details.sdceno = supplier.sdceno order by quotation asc");		   
+			$result = $query->result();
+		    return $result;  		
+		}
+		
+		public function getPODetailsInfo(){
+			$query = $this->db->query("select * from purchase_order_details join warehouse_spares on purchase_order_details.wsid = warehouse_spares.wsid join purchase_request on purchase_order_details.prid = purchase_request.prid order by category");
+			$result = $query->result();
+		    return $result;  		
+		}
+		public function getSPODetailsInfo($data){
+			$query = $this->db->query("select * from purchase_order_details join warehouse_spares on purchase_order_details.wsid = warehouse_spares.wsid join purchase_request on purchase_order_details.prid = purchase_request.prid where poid ='".$data."' order by category");
 			$result = $query->result();
 		    return $result;  		
 		}
 		
 		public function update_on_bid($data,$data1){	
-			$query = $this->db->query("update purchase_request set status = 'on bid',person_responsible='".$data1."'	 where prid ='".$data."'");		   
+			$query = $this->db->query("update purchase_request set status = 'on bid',person_responsible='".$data1."' where prid ='".$data."'");		   
+		}public 
+		
+		function update_status_on_delivery($data,$data1){	
+			$query = $this->db->query("update delivery set status='completed',received_by='".$data."',date_completed=current_date where did ='".$data1."'");		   
 		}
 		
-		public function set_bid($data,$data1,$data2,$data3){	
-			$query = $this->db->query("INSERT INTO bidding(date,time,venue,status,date_status_changed,person_responsible) 
-										VALUES ('".$data."','".$data1."','".$data2."','pending',current_date,'".$data3."')");		   
+		public function update_dceno_on_purchaseorder($data){	
+			$query = $this->db->query("update purchase_order set dceno = 1 where poid ='".$data."'");		   
+		}
+		
+		public function update_qoutation_on_bid($data,$data1){	
+			$query = $this->db->query("update bidding_details set quotation = '".$data."' where bdid ='".$data1."'");		   
+		}
+		
+		public function bidding_mark_as_complete($data,$data1){	
+			$query = $this->db->query("update bidding set status = 'confirm',date_status_changed=current_date,person_responsible='".$data."' where bid ='".$data1."'");		   
+		}
+		
+		public function set_bid($data,$data1,$data2,$data3,$data4,$data5){	
+			$query = $this->db->query("INSERT INTO bidding(date,time,venue,status,date_status_changed,person_responsible,wsid,prid) 
+										VALUES ('".$data."','".$data1."','".$data2."','pending',current_date,'".$data3."','".$data4."','".$data5."')");		   
+		}
+		
+		public function set_delivery($data,$data1){	
+			$query = $this->db->query("INSERT INTO delivery(date_delivered,received_by,remarks,total_amount,sdceno,status,date_completed,poid) 
+										VALUES (current_date,'','',0,".$data.",'on inspection',null,".$data1.")");		   
+		}
+		
+		public function set_delivery_details($data,$data1,$data2,$data3){	
+			$query = $this->db->query("INSERT INTO delivery_details(qty_delivered,qty_accepted,qty_available,delivery_price,wsid,did) 
+										VALUES (".$data.",0,0,".$data1.",".$data2.",".$data3.")");		   
 		}
 		
 		public function set_bid_details($data,$data1,$data2,$data3,$data4){	
 			$query = $this->db->query("INSERT INTO bidding_details(bid,prid,wsid,sdceno,quotation,status,qty) 
-										VALUES (".$data.",".$data1.",".$data2.",".$data3.",0,'pending',".$data4.")");		   
+										VALUES (".$data.",".$data1.",".$data2.",".$data3.",0,'confirm',".$data4.")");		   
 		}
 		
 		//function updatestatuspurchaserequest($data,$data1,$data2){	

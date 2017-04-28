@@ -80,86 +80,26 @@
               	  <h3 class="centered" style="text-transform:uppercase;"><?php echo $Enduser_Name;?><br><i class="title-position" ><?php echo $Position;?></i></h3>
               	  
                   <li class="sub-menu">
-                      <a href="<?php echo base_url();?>WMS/Homepage">
-                          <i class="fa fa-database"></i>
-                          <span>Spares Inventory</span>
+                      <a href="<?php echo base_url();?>WMS/Approve_PR">
+                          <i class="fa fa-shopping-cart"></i>
+                          <span>Approved PR</span>
                       </a>
-                     
-                  </li>
-
-				 <li class="sub-menu">
-                      <a href="javascript:;">
-                          <i class="fa fa-envelope" aria-hidden="true" ></i>
-                          <span>Spares Request</span>
-				      </a>
-                 
-					  <ul class="sub">
-                          <li><a href="<?php echo base_url();?>WMS/Spare_Request">Pending
-						  <span class="label label-theme pull-right"  style="margin-right:55%;font-size:10px;">
-						  <?php foreach ($getallpendingSpareRequestCount as $row){
-							echo $row->count;
-						  }
-						  ?></span>
-						  </a>
-						  </li>
-                          <li><a href="<?php echo base_url();?>WMS/Request_Approved">Release
-						  </a>
-						  </li>
-                      </ul>
                   </li>
 				  
 				  <li class="sub-menu">
-                      <a href="javascript:;" class="active">
-                          <i class="fa fa-shopping-cart" aria-hidden="true" ></i>
-                          <span>Purchase Request</span>
-				
-                      </a>
-					  
-                      <ul class="sub">
-                          <li ><a href="<?php echo base_url();?>WMS/Spare_Purchases">Pending
-						  <span class="label label-theme pull-right"  style="margin-right:55%;font-size:10px;">
-						  <?php foreach ($getallpendingPurchaseRequestCount as $row){
-							echo $row->count;
-						  }
-						  ?></span>
-						  </a>
-						  </li>
-                          <li class="active"><a href="<?php echo base_url();?>WMS/Spare_Purchases_Approved">Approved
-						  </a>
-						  </li>
-                      </ul>
-                  </li>
-				  
-                  <li class="sub-menu">
-                      <a href="<?php echo base_url();?>WMS/Purchase_Order">
+                      <a href="<?php echo base_url();?>WMS/Bidding"  class="active">
                           <i class="fa fa-sort-amount-desc"></i>
                           <span>Bidding</span>
                       </a>
                   </li>
 
 				  <li class="sub-menu">
-                      <a href="<?php echo base_url();?>WMS/Purchase_Order">
+                      <a href="<?php echo base_url();?>WMS/Purchase_Order_P">
                           <i class="glyphicon glyphicon-barcode"></i>
                           <span>Purchase Order</span>
                       </a>
                   </li>
                   
-					<li class="sub-menu">
-                      <a href="<?php echo base_url();?>WMS/Purchase_Order">
-                          <i class="fa fa-truck"></i>
-                          <span>Delivery</span>
-                      </a>
-                  </li>
-                  
-				  <li class="sub-menu">
-                      <a href="<?php echo base_url();?>WMS/PO_Reports">
-                         <i class="glyphicon glyphicon-stats"></i>
-                          <span>Statistics</span>
-                      </a>
-                  </li>
-                  
-
-
                 </ul>
               <!-- sidebar menu end-->
           </div>
@@ -171,8 +111,8 @@
       <!--main content start-->
       <section id="main-content">
         <section class="wrapper site-min-height">
-          	<h4><i class="glyphicon glyphicon-file"></i><a href="<?php echo base_url();?>WMS/Spare_Purchases_Approved" title="List of Spare Request" style="color:#004D40;padding-left:5px;font-size:15px;">Purchase Request</a>
-			<i class="fa fa-angle-double-left" style="padding-left:5px;"></i><a style="color:#004D40;padding-left:5px;font-size:16px;">Approved</a></h4>
+          	<h4><i class="fa fa-sort-amount-desc"></i><a href="<?php echo base_url();?>WMS/Bidding" title="List of Bidding" style="color:#004D40;padding-left:5px;font-size:15px;">Bidding</a>
+			</h4>
           	<div class="row mt">
           		<div class="col-lg-12">
 					<div class="col-lg-12">
@@ -185,7 +125,7 @@
 							<!-- Nav tabs -->
 							<ul class="nav nav-tabs">
 																
-								<li class="active"><a href="#Requested" data-toggle="tab">Approved</a>
+								<li class="active"><a href="#Requested" data-toggle="tab">List Of Bidding</a>
 								</li>
 							
 							</ul>
@@ -195,54 +135,77 @@
 							
 								
 								<div class="tab-pane fade in active" id="Requested">
-									<h5><center>List of Approved</center></h5>
 									 <div class="panel-body">
                             <div class="dataTable_wrapper">
-                                <table class="table table-striped table-advance table-hover" id="dataTables-Requested">
+                                <table class="table table-striped table-advance table-hover" id="dataTables-Requested" style='font-weight:bold;'>
                                     <thead>
                                         <tr>
-                                            <th class="hidden-phone"><center>No.</center></th>
-                                            <th class="hidden-phone"><center>PR No.</center></th>
-											<th class="hidden-phone" ><i class="fa fa-calendar" style="margin-left:12%;"></i> DATE CREATED</th>
-											<th class="hidden-phone" ><i class="fa fa-calendar" style="margin-left:5%;"></i> REQUISITIONER</th>
-                                            <th><center><i class="glyphicon glyphicon-user"></i>STATUS</center></th>
-											  <th><center><i class="fa fa-eye"></i> VIEW</center></th>
+                                            <th class="hidden-phone" ><center>No.</center></th>
+											<th class="hidden-phone" ><i style="margin-left:12%;"></i> DATE</th>
+											<th class="hidden-phone" ><i style="margin-left:5%;"></i> TIME</th>
+											<th class="hidden-phone" ><i  style="margin-left:5%;"></i> VENUE</th>
+                                            <th><center><i class="fa fa-tags"></i> STATUS</center></th>
+											 <th><i class="fa fa-gears" style="margin-left:20%;"></i> OPTION</th>
 											</tr>
                                     </thead>
                                     <tbody>
                                         
 										 <?php 
 										 $iii = 1;
-										 foreach ($Draftp as $row){ 
-													$lastSpId = $row->prid;
-													if($lastSpId < 10){
+										 foreach ($getBidInfo as $row){ 
+										 ?>
+                                        <tr class="spareitems">
+										
+                                            <td class="hidden-phone"><center>
+											<?php
+												$lastSpId = $row->bid;
+												if($lastSpId < 10){
 													  $a = "00$lastSpId";
 													}else if ($lastSpId >= 10 && $lastSpId < 100){
 													  $a = "0$lastSpId";
 													}
-													$date=date('Y', strtotime($row->date));
-													$b=substr($date,2);
-										 
-										 ?>
-                                        <tr class="spareitems">
-										
-                                            <td class="hidden-phone"><center><?=$iii++;?></center></td>
-                                            <td class="hidden-phone"><center>AG67-PR<?php echo $b."-".$a; ?></center></td></td>
-                                            <td style="text-transform:uppercase;"><span style="margin-left:5%;"><?=date('F m, Y  h:i A', strtotime($row->date));?></span></td>
-                                            <td style="text-transform:uppercase;"><span style="margin-left:10%;"><?=$row->fname[0].".".$row->mname[0]." ".$row->lname;?></span></td>
-                                            <td class="hidden-phone"><center>
-											<?php if ($row->status == 'approved'){ ?>
-											<span class="label label-success" style="text-transform:capitalize;font-size:12px;"><?php echo $row->status; ?></span>
+													
+													echo "Bid-".$a;
+											?>
+											</center></td>
+                                            <td style="text-transform:capitalize;"><span style="margin-left:5%;"><?=date('F m, Y', strtotime($row->date));?></span></td>
+                                            <td style="text-transform:capitalize;"><span style="margin-left:5%;"><?=date('h:i A', strtotime($row->time));?></span></td>
+                                            <td style="text-transform:capitalize;"><span style="margin-left:10%;"><?=$row->venue;?></span></td>
+                                            <td class="hidden-phone" style="text-transform:capitalize;"><center>
+											<?php if ($row->status == 'confirm'){ ?>
+											<span class="label label-primary" style="text-transform:capitalize;font-size:12px;">Completed</span>
 											<?php }else{ ?>
-											<span class="label label-danger" style="font-size:12px;">Bidding</span>
+											<span class="label label-danger" style="font-size:12px;"><?="On Bid";?></span>
 											<?php } ?>
 											</center></td>
                                             
-                                            <td><center><form method="post" action="<?php echo base_url();?>WMS/Spare_Purchases_Approved_Info">
-												<input  type="hidden" value="<?php echo $row->prid;?>" name="prid">
-												<button type="submit"  class="btn btn-success btn-xs" style="text-decoration:none;"> 
+                                            <td><center>
+											<?php if ($row->status == 'confirm'){ ?>
+												<div class="col-lg-6">
+												<center>
+												<a  class="btn btn-success btn-xs pull-right" title="SETUP BIDS" data-toggle="modal" data-target="#<?php echo $row->bid;?>view">
+													<i class="glyphicon glyphicon-search" aria-hidden="true"></i>
+													</a>
+												</center>
+												</div>
+												
+											<?php }else{ ?>
+												<div class="col-lg-6">
+												<a  class="btn btn-success btn-xs pull-right" title="SETUP BIDS" data-toggle="modal" data-target="#<?php echo $row->bid;?>view">
+													<i class="glyphicon glyphicon-search" aria-hidden="true"></i>
+													</a>
+												</div>
+											<div class="col-lg-6">
+										
+											<form method="post" action="<?php echo base_url();?>WMS/Bidding_Set_Info">
+												<input  type="hidden" value="<?php echo $row->wsid;?>" name="tsid1">
+												<input  type="hidden" value="<?php echo $row->prid;?>" name="trid1">
+												<button type="submit"  class="btn btn-default btn-xs pull-right" style="text-decoration:none;" title="SET BIDS"> 
 													<i style='font-size:12px;' class='fa fa-share' aria-hidden='true'></i>
 												</button></form>
+
+												</div>
+											<?php } ?>
 											</center></td>
 								
                                         </tr>
@@ -275,6 +238,88 @@
 
 
 	  
+	  <?php foreach ($getBidInfo as $row){ ?>			
+			<div class="modal fade" id="<?php echo $row->bid;?>view" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog" style="width:50%;">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						    <p class="modal-title" id="myModalLabel" style="font-size:14px;">Bidding Details</p>
+						</div>
+						<div class="modal-body" style="font-size:14px;color:#00271D;font-weight:bold;text-transform:capitalize;">
+						
+						<div class="row">
+							<div class='col-lg-6'>
+								<p>No. <code><?php
+									$lastSpId = $row->bid;if($lastSpId < 10){
+									$a = "00$lastSpId";}else if ($lastSpId >= 10 && $lastSpId < 100){
+									$a = "0$lastSpId";}echo "Bid-".$a;?></code>
+								</p>
+								<p>Venue : <code style="font-size:14px;"><?=$row->venue;?></code></p>
+							</div>
+							
+							<div class='col-lg-6'>
+								<p>Time : <code style="font-size:14px;"><?=date('h:i A', strtotime($row->time));?></code></p>
+								<p>Date : <code style="font-size:14px;"><?=date('F d, Y', strtotime($row->date));?></code></p>
+							</div>
+							
+							<div class='col-lg-12'>
+								<p>PR No. : <code style="font-size:14px;"><?php
+								$lastSpId = $row->prid;if($lastSpId < 10){$a = "00$lastSpId";}else if ($lastSpId >= 10 && $lastSpId < 100){$a = "0$lastSpId";}$date=date('Y', strtotime($row->date));$b=substr($date,2);echo "AG67-PR".$b."-".$a;?></code></p>
+							</div>
+							
+							<div class='col-lg-12'>
+								<p>Item : <code style="font-size:14px;"><?=$row->category.", ".$row->spare_name;?></code></p>
+							</div>
+							
+						
+							
+							<div class='col-lg-12'>
+								<div style="border-top:1px solid #004D40;height:1px;margin:0px auto;padding-bottom:2%;"></div>
+								<center><p>- - BIDDERS - -</p></center>
+							</div>
+							<div class='col-lg-12'>
+								 <table class="table table-striped  table-hover  table-bordered" >
+                                    <thead>
+                                        <tr>
+											<td style="border:1px solid #24665B;"><center>RANKING</center></td>
+											<td style="border:1px solid #24665B;"><center>SUPPLIER</center></td>
+											<td style="border:1px solid #24665B;"><center>QUOTATION</center></td>
+										</tr>
+									</thead>
+									<tbody>
+										<?php
+											$i=1;
+											foreach ($getBidDetailsInfo as $row1){ 
+											if ($row->bid != $row1->bid){}else{
+										?>
+											<tr>
+												<td style="border:1px solid #24665B;"><center><?php if($row1->quotation==0){}else{echo $i++;}?></center></td>
+												<td style="border:1px solid #24665B;"><p><?=$row1->supplier_name;?></p></td>
+												<td style="border:1px solid #24665B;" class="text-right"><?php if($row1->quotation==0){echo "<label class='btn btn-xs btn-danger'>NOT SET</label>";}else{ ?>₱ <?=number_format($row1->quotation,2);}?></td>
+											</tr>
+										<?php }} ?>
+									</tbody>
+								</table>
+								<p style="text-transform:capitalize;">Status : <code style="font-size:14px;"><?php
+								if ($row->status == 'confirm'){echo 'Completed';}else{echo 'On Bid';};
+								?></code></p>
+								<p style="text-transform:capitalize;">Responsible : <code style="font-size:14px;"><?=$row->person_responsible;?></code></p>
+								<p style="text-transform:capitalize;">Date Modified :<code style="font-size:14px;"><?=date('F d, Y', strtotime($row->date_status_changed));?></code></p>
+							</div>
+							
+						</div> <!--end row-->
+						</div>	
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						</div>
+						
+					
+					</div>
+				</div>
+			</div>
+<?php }?>
+
 	  
 	  
 	  

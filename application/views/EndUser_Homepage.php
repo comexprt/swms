@@ -355,6 +355,11 @@
 											<tr>
 												<th>
 													<center>
+														Delivery No.
+													</center>
+												</th>
+												<th>
+													<center>
 														Date Delivered
 													</center>
 												</th>
@@ -379,6 +384,13 @@
 											
 											?>
 												<tr class="odd gradeX">
+													<td><center>
+													<?php 
+													$lastSpId = $row1->did;if($lastSpId < 10){
+													$a = "00$lastSpId";}else if ($lastSpId >= 10 && $lastSpId < 100){
+													$a = "0$lastSpId";}$date=date('Y', strtotime($row1->date_delivered));$b=substr($date,2);echo "AG67-DEV".$b."-".$a;?>
+													
+													</center></td>
 													<td><center><?= date('F d , Y',strtotime($row1->date_delivered));?></center></td>
 													<td class="text-right">
 														<?php echo "₱ ".number_format($row1->delivery_price,2); ?>

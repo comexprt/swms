@@ -60,7 +60,7 @@
                   </li>
 				  
                   <li class="sub-menu">
-                      <a href="<?php echo base_url();?>WMS/Purchase_Order">
+                      <a href="<?php echo base_url();?>WMS/bids">
                           <i class="fa fa-sort-amount-desc"></i>
                           <span>Bidding</span>
                       </a>
@@ -74,7 +74,7 @@
                   </li>
                   
 					<li class="sub-menu">
-                      <a href="<?php echo base_url();?>WMS/Purchase_Order">
+                      <a href="<?php echo base_url();?>WMS/Delivery">
                           <i class="fa fa-truck"></i>
                           <span>Delivery</span>
                       </a>

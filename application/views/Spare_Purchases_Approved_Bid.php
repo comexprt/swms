@@ -80,14 +80,21 @@
               	  <h3 class="centered" style="text-transform:uppercase;"><?php echo $Enduser_Name;?><br><i class="title-position" ><?php echo $Position;?></i></h3>
               	  
                   <li class="sub-menu">
-                      <a href="<?php echo base_url();?>WMS/Bidding" class="active">
+                      <a href="<?php echo base_url();?>WMS/Approve_PR" class="active">
+                          <i class="fa fa-shopping-cart"></i>
+                          <span>Approved PR</span>
+                      </a>
+                  </li>
+				  
+				  <li class="sub-menu">
+                      <a href="<?php echo base_url();?>WMS/Bidding">
                           <i class="fa fa-sort-amount-desc"></i>
                           <span>Bidding</span>
                       </a>
                   </li>
 
 				  <li class="sub-menu">
-                      <a href="<?php echo base_url();?>WMS/Purchase_Order">
+                      <a href="<?php echo base_url();?>WMS/Purchase_Order_P">
                           <i class="glyphicon glyphicon-barcode"></i>
                           <span>Purchase Order</span>
                       </a>
@@ -104,7 +111,7 @@
       <!--main content start-->
       <section id="main-content">
         <section class="wrapper site-min-height">
-          	<h4><i class="fa fa-sort-amount-desc	"></i><a href="<?php echo base_url();?>WMS/Bidding" title="List of Bidding PR" style="color:#004D40;padding-left:5px;font-size:15px;">Bidding PR</a>
+          	<h4><i class="fa fa-shopping-cart"></i><a href="<?php echo base_url();?>WMS/Approve_PR" title="List of Approved PR" style="color:#004D40;padding-left:5px;font-size:15px;">Approved PR</a>
 			</h4>
           	<div class="row mt">
           		<div class="col-lg-12">
@@ -130,14 +137,14 @@
 								<div class="tab-pane fade in active" id="Requested">
 									 <div class="panel-body">
                             <div class="dataTable_wrapper">
-                                <table class="table table-striped table-advance table-hover" id="dataTables-Requested">
+                                <table class="table table-striped table-advance table-hover" id="dataTables-Requested" style="font-weight:bold;">
                                     <thead>
                                         <tr>
                                             <th class="hidden-phone"><center>No.</center></th>
                                             <th class="hidden-phone"><center>PR No.</center></th>
 											<th class="hidden-phone" ><i class="fa fa-calendar" style="margin-left:12%;"></i> DATE CREATED</th>
 											<th class="hidden-phone" ><i class="fa fa-calendar" style="margin-left:5%;"></i> REQUISITIONER</th>
-                                            <th><center><i class="glyphicon glyphicon-stats"></i> ON BID</center></th>
+                                            <th><center><i class="fa fa-tags"></i> STATUS</center></th>
 											  <th><center><i class="fa fa-eye"></i> VIEW</center></th>
 											</tr>
                                     </thead>
@@ -176,7 +183,7 @@
 													<i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
 													</a>
 											<?php }else{ ?>
-											<form method="post" action="<?php echo base_url();?>WMS/Bidding_Info">
+											<form method="post" action="<?php echo base_url();?>WMS/on_bid_info">
 												<input  type="hidden" value="<?php echo $row->prid;?>" name="prid">
 												<button type="submit"  class="btn btn-default btn-xs" style="text-decoration:none;"> 
 													<i style='font-size:12px;' class='fa fa-share' aria-hidden='true'></i>
@@ -241,16 +248,7 @@
 								<input  type="hidden" value="<?php  echo $row->date;?>" name="prid_date">
 					
 								<input  type="hidden" value="<?=$Enduser_Name;?>" name="responsible_person">
-									<!--label	style="font-size:14px;font-weight:bold">Venue : </label>
-									<input class="form-control" type="text" name="venue" required/>
-									<br>
-									
-									<label	style="font-size:14px;font-weight:bold">Date : </label>
-									<input class="form-control" type="date" name="date" required/>
-									<br>
-									
-									<label	style="font-size:14px;font-weight:bold">Time : </label>
-									<input class="form-control" type="time" name="time" required/-->
+								
 									
 								</div>
 							</div> <!--end row-->
