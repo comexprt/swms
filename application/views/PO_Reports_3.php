@@ -49,155 +49,51 @@
 
 							
 	</style>
-<!-- Chart code -->
-<script>
-var chart;
-var legend;
-var selected;
 
-var types = [{
-  type: "Transformer",
-  percent: 32,
-  color: "#FDD400",
-  subs: [{
-    type: "Corrugated",
-    percent: 8
-  }, {
-    type: "Three-Phase Pad Mounted",
-    percent: 10
-  }, {
-    type: "sample transformer",
-    percent: 14
-  }]
-}, {
-  type: "Valve",
-  percent: 45,
-  color: "#D77377",
-  subs: [{
-    type: "butterfly valve",
-    percent: 25
-  }, {
-    type: "flanged ductile iron gate",
-    percent: 18
-  }, {
-    type: "sample valve",
-    percent: 7
-  }]
-}, {
-  type: "Turbine",
-  percent: 13,
-  color: "#67B7DC",
-  subs: [{
-    type: "BOCHI synchronous",
-    percent: 13
-  }]
-}, {
-  type: "Carbon Brushes",
-  percent: 10,
-  color: "#83B762",
-  subs: [{
-    type: "copper center carbon",
-    percent: 10
-  }]
-}];
-
-function generateChartData() {
-  var chartData = [];
-  for (var i = 0; i < types.length; i++) {
-    if (i == selected) {
-      for (var x = 0; x < types[i].subs.length; x++) {
-        chartData.push({
-          type: types[i].subs[x].type,
-          percent: types[i].subs[x].percent,
-          color: types[i].color,
-          pulled: true
-        });
-      }
-    } else {
-      chartData.push({
-        type: types[i].type,
-        percent: types[i].percent,
-        color: types[i].color,
-        id: i
-      });
-    }
-  }
-  return chartData;
-}
-
-AmCharts.makeChart("chartdiv", {
-
-
-  marginTop: 0,
-  marginBottom: 0,
-  marginLeft: 0,
-  marginRight: 0,
-  pullOutRadius: 0,
-  "type": "pie",
-  "theme": "none",
-
-  "dataProvider": generateChartData(),
-  "labelText": "[[title]]: [[value]]",
-  "balloonText": "[[title]]: [[value]]",
-  "titleField": "type",
-  "valueField": "percent",
-  "outlineColor": "#FFFFFF",
-  "outlineAlpha": 0.8,
-  "outlineThickness": 2,
-  "colorField": "color",
-  "pulledField": "pulled",
-  
-   "legend":{
-   	"position":"left",
-    "autoMargins":false
-  },
-  "listeners": [{
-    "event": "clickSlice",
-    "method": function(event) {
-      var chart = event.chart;
-      if (event.dataItem.dataContext.id != undefined) {
-        selected = event.dataItem.dataContext.id;
-      } else {
-        selected = undefined;
-      }
-      chart.dataProvider = generateChartData();
-      chart.validateData();
-    }
-  }],
-  "export": {
-    "enabled": false
-  }
-});
-</script>
 
 <!-- Chart code -->
 <script>
-var chart = AmCharts.makeChart("chartdiv1",
+var chart = AmCharts.makeChart("chartdiv",
 {
     "type": "serial",
     "theme": "light",
     "dataProvider": [{
-        "name": "John",
+		<?php 
+		$to_explode = "Ched Coco Lumber & Construction Supply";
+		$name=explode(' ',$to_explode)?>
+        "name": "<?=$name[0]." ".$name[1];?>",
         "points": 10,
-        "color": "#2F4074",
+        "color": "#98A3BA",
         "bullet": "<?php echo base_url();?>/_assets/img/F01.png"
     }, {
-        "name": "Damon",
+		<?php 
+		$to_explode = "Loremar Construction Supply";
+		$name=explode(' ',$to_explode)?>
+        "name": "<?=$name[0]." ".$name[1];?>",
         "points": 25,
         "color": "#FDD400",
         "bullet": "<?php echo base_url();?>/_assets/img/C01.png"
     }, {
-        "name": "Patrick",
+		<?php 
+		$to_explode = "Ompad IT-Services";
+		$name=explode(' ',$to_explode)?>
+        "name": "<?=$name[0]." ".$name[1];?>",
         "points": 8,
         "color": "#CC4748",
         "bullet": "<?php echo base_url();?>/_assets/img/D02.png"
     }, {
-        "name": "Mark",
+		<?php 
+		$to_explode = "Qualitron Contruction & Industrial Supplies";
+		$name=explode(' ',$to_explode)?>
+        "name": "<?=$name[0]." ".$name[1];?>",
         "points": 18,
         "color": "#67B7DC",
         "bullet": "<?php echo base_url();?>/_assets/img/E01.png"
     }, {
-        "name": "Mark",
+		<?php 
+		$to_explode = "Trinity Blocks & Construction Supply";
+		$name=explode(' ',$to_explode)?>
+        "name": "<?=$name[0]." ".$name[1];?>",
         "points": 31,
         "color": "#448E4D",
         "bullet": "<?php echo base_url();?>/_assets/img/H01.png"
@@ -383,10 +279,10 @@ var chart = AmCharts.makeChart("chartdiv1",
 			
 				<div class="panel-bodyt" style="margin-top:3%;font-weight:bold;">
 					<ul class="nav nav-tabs">
-						<li class="active"><a href="<?php echo base_url();?>WMS/PO_Reports">Spares Summary</a></li>
-						<li><a href="<?php echo base_url();?>WMS/PO_Reports_1">Annual Cost</a></li>
+						<li ><a href="<?php echo base_url();?>WMS/PO_Reports">Spares Summary</a></li>
+						<li ><a href="<?php echo base_url();?>WMS/PO_Reports_1">Annual Cost</a></li>
 						<li><a href="<?php echo base_url();?>WMS/PO_Reports_2">Annual Purchases & Withdrawals</a></li>
-						<li><a href="<?php echo base_url();?>WMS/PO_Reports_3">Top Supplier's</a></li>
+						<li class="active"><a href="<?php echo base_url();?>WMS/PO_Reports_3">Top Supplier's</a></li>
 					</ul>
 
 					<div class="tab-content">

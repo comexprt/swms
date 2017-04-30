@@ -3208,53 +3208,78 @@ public function updatestatus(){
 	
 	}
 	
-public function PO_Reports(){
-
+	public function PO_Reports(){
 		if($this->session->userdata('logged_PO')){
-		
-		 
-		  
-			$data['message'] = "REPORTS";
-	
-		  
 			$session_data = $this->session->userdata('logged_PO');
-			$DceNo = $session_data['DceNo'];
-			$Lname = $session_data['Lname'];
-			$Fname = $session_data['Fname'];
-			$Mname = $session_data['Mname'];
-			$Position = $session_data['Position'];
-			$Password = $session_data['Password'];
-			$Username = $session_data['Username'];
-			$CcNo = $session_data['CcNo'];
-			$Section = $session_data['Section'];
+			$DceNo = $session_data['DceNo'];$Lname = $session_data['Lname'];$Fname = $session_data['Fname'];
+			$Mname = $session_data['Mname'];$Position = $session_data['Position'];$Password = $session_data['Password'];
+			$Username = $session_data['Username'];$CcNo = $session_data['CcNo'];$Section = $session_data['Section'];
 			$Access_level = $session_data['Access_level'];
-
-		    
-			$data['DceNo'] = "$DceNo";
-			$data['CcNo'] = "$CcNo";
-			$data['Lname'] = "$Lname";
-			$data['Fname'] = "$Fname";
-			$data['Mname'] = "$Mname";
-			$data['Username'] = "$Username";
-			$data['Password'] = "$Password";
-			$data['Section'] = "$Section";
-			$data['Access_level'] = "$Access_level";
-			$data['Position'] = "$Position";
 			
+		    $data['getallpendingSpareRequestCount'] = $this->model_get->getallpendingSpareRequestCount();
+			$data['getallpendingPurchaseRequestCount'] = $this->model_get->getallpendingPurchaseRequestCount();
+			$data['DceNo'] = "$DceNo";$data['CcNo'] = "$CcNo";$data['Lname'] = "$Lname";$data['Fname'] = "$Fname";$data['Mname'] = "$Mname";$data['Username'] = "$Username";
+			$data['Password'] = "$Password";$data['Section'] = "$Section";$data['Access_level'] = "$Access_level";$data['Position'] = "$Position";
 			$data['Enduser_Name'] = "$Fname[0].$Mname[0] $Lname";
 			
-        
-				//$data['DraftInfo'] = $this->model_get->getSpecificRequest($WRId);
-				$this->load->view('PO_Reports',$data);
+			$this->load->view('PO_Reports',$data);
 	
+		}else{redirect('WMS/InvalidURL');}
+	}
+	
+	public function PO_Reports_1(){
+		if($this->session->userdata('logged_PO')){
+			$session_data = $this->session->userdata('logged_PO');
+			$DceNo = $session_data['DceNo'];$Lname = $session_data['Lname'];$Fname = $session_data['Fname'];
+			$Mname = $session_data['Mname'];$Position = $session_data['Position'];$Password = $session_data['Password'];
+			$Username = $session_data['Username'];$CcNo = $session_data['CcNo'];$Section = $session_data['Section'];
+			$Access_level = $session_data['Access_level'];
 			
-		 
-		}else
-			{
-				//If no session, redirect to login page
-				redirect('WMS/InvalidURL');
-			}
+		    $data['getallpendingSpareRequestCount'] = $this->model_get->getallpendingSpareRequestCount();
+			$data['getallpendingPurchaseRequestCount'] = $this->model_get->getallpendingPurchaseRequestCount();
+			$data['DceNo'] = "$DceNo";$data['CcNo'] = "$CcNo";$data['Lname'] = "$Lname";$data['Fname'] = "$Fname";$data['Mname'] = "$Mname";$data['Username'] = "$Username";
+			$data['Password'] = "$Password";$data['Section'] = "$Section";$data['Access_level'] = "$Access_level";$data['Position'] = "$Position";
+			$data['Enduser_Name'] = "$Fname[0].$Mname[0] $Lname";
+			
+			$this->load->view('PO_Reports_1',$data);
 	
+		}else{redirect('WMS/InvalidURL');}
+	}
+public function PO_Reports_2(){
+		if($this->session->userdata('logged_PO')){
+			$session_data = $this->session->userdata('logged_PO');
+			$DceNo = $session_data['DceNo'];$Lname = $session_data['Lname'];$Fname = $session_data['Fname'];
+			$Mname = $session_data['Mname'];$Position = $session_data['Position'];$Password = $session_data['Password'];
+			$Username = $session_data['Username'];$CcNo = $session_data['CcNo'];$Section = $session_data['Section'];
+			$Access_level = $session_data['Access_level'];
+			
+		    $data['getallpendingSpareRequestCount'] = $this->model_get->getallpendingSpareRequestCount();
+			$data['getallpendingPurchaseRequestCount'] = $this->model_get->getallpendingPurchaseRequestCount();
+			$data['DceNo'] = "$DceNo";$data['CcNo'] = "$CcNo";$data['Lname'] = "$Lname";$data['Fname'] = "$Fname";$data['Mname'] = "$Mname";$data['Username'] = "$Username";
+			$data['Password'] = "$Password";$data['Section'] = "$Section";$data['Access_level'] = "$Access_level";$data['Position'] = "$Position";
+			$data['Enduser_Name'] = "$Fname[0].$Mname[0] $Lname";
+			
+			$this->load->view('PO_Reports_2',$data);
+	
+		}else{redirect('WMS/InvalidURL');}
+	}
+public function PO_Reports_3(){
+		if($this->session->userdata('logged_PO')){
+			$session_data = $this->session->userdata('logged_PO');
+			$DceNo = $session_data['DceNo'];$Lname = $session_data['Lname'];$Fname = $session_data['Fname'];
+			$Mname = $session_data['Mname'];$Position = $session_data['Position'];$Password = $session_data['Password'];
+			$Username = $session_data['Username'];$CcNo = $session_data['CcNo'];$Section = $session_data['Section'];
+			$Access_level = $session_data['Access_level'];
+			
+		    $data['getallpendingSpareRequestCount'] = $this->model_get->getallpendingSpareRequestCount();
+			$data['getallpendingPurchaseRequestCount'] = $this->model_get->getallpendingPurchaseRequestCount();
+			$data['DceNo'] = "$DceNo";$data['CcNo'] = "$CcNo";$data['Lname'] = "$Lname";$data['Fname'] = "$Fname";$data['Mname'] = "$Mname";$data['Username'] = "$Username";
+			$data['Password'] = "$Password";$data['Section'] = "$Section";$data['Access_level'] = "$Access_level";$data['Position'] = "$Position";
+			$data['Enduser_Name'] = "$Fname[0].$Mname[0] $Lname";
+			
+			$this->load->view('PO_Reports_3',$data);
+	
+		}else{redirect('WMS/InvalidURL');}
 	}
 
 

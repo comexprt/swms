@@ -47,199 +47,90 @@
 		font-weight :bold;
 	}
 
-							
+
 	</style>
-<!-- Chart code -->
+
+	<!-- Chart code -->
 <script>
-var chart;
-var legend;
-var selected;
-
-var types = [{
-  type: "Transformer",
-  percent: 32,
-  color: "#FDD400",
-  subs: [{
-    type: "Corrugated",
-    percent: 8
-  }, {
-    type: "Three-Phase Pad Mounted",
-    percent: 10
-  }, {
-    type: "sample transformer",
-    percent: 14
-  }]
-}, {
-  type: "Valve",
-  percent: 45,
-  color: "#D77377",
-  subs: [{
-    type: "butterfly valve",
-    percent: 25
-  }, {
-    type: "flanged ductile iron gate",
-    percent: 18
-  }, {
-    type: "sample valve",
-    percent: 7
-  }]
-}, {
-  type: "Turbine",
-  percent: 13,
-  color: "#67B7DC",
-  subs: [{
-    type: "BOCHI synchronous",
-    percent: 13
-  }]
-}, {
-  type: "Carbon Brushes",
-  percent: 10,
-  color: "#83B762",
-  subs: [{
-    type: "copper center carbon",
-    percent: 10
-  }]
-}];
-
-function generateChartData() {
-  var chartData = [];
-  for (var i = 0; i < types.length; i++) {
-    if (i == selected) {
-      for (var x = 0; x < types[i].subs.length; x++) {
-        chartData.push({
-          type: types[i].subs[x].type,
-          percent: types[i].subs[x].percent,
-          color: types[i].color,
-          pulled: true
-        });
-      }
-    } else {
-      chartData.push({
-        type: types[i].type,
-        percent: types[i].percent,
-        color: types[i].color,
-        id: i
-      });
-    }
-  }
-  return chartData;
-}
-
-AmCharts.makeChart("chartdiv", {
-
-
-  marginTop: 0,
-  marginBottom: 0,
-  marginLeft: 0,
-  marginRight: 0,
-  pullOutRadius: 0,
-  "type": "pie",
-  "theme": "none",
-
-  "dataProvider": generateChartData(),
-  "labelText": "[[title]]: [[value]]",
-  "balloonText": "[[title]]: [[value]]",
-  "titleField": "type",
-  "valueField": "percent",
-  "outlineColor": "#FFFFFF",
-  "outlineAlpha": 0.8,
-  "outlineThickness": 2,
-  "colorField": "color",
-  "pulledField": "pulled",
-  
-   "legend":{
-   	"position":"left",
+var chart = AmCharts.makeChart("chartdiv", {
+	"type": "serial",
+     "theme": "none",
+	"categoryField": "year",
+	"rotate": true,
+	"startDuration": 1,
+	"categoryAxis": {
+		"gridPosition": "start",
+		"position": "left"
+	},
+	"trendLines": [],
+	"legend":{
+   	"position":"top",
     "autoMargins":false
   },
-  "listeners": [{
-    "event": "clickSlice",
-    "method": function(event) {
-      var chart = event.chart;
-      if (event.dataItem.dataContext.id != undefined) {
-        selected = event.dataItem.dataContext.id;
-      } else {
-        selected = undefined;
-      }
-      chart.dataProvider = generateChartData();
-      chart.validateData();
-    }
-  }],
-  "export": {
-    "enabled": false
-  }
-});
-</script>
-
-<!-- Chart code -->
-<script>
-var chart = AmCharts.makeChart("chartdiv1",
-{
-    "type": "serial",
-    "theme": "light",
-    "dataProvider": [{
-        "name": "John",
-        "points": 10,
-        "color": "#2F4074",
-        "bullet": "<?php echo base_url();?>/_assets/img/F01.png"
-    }, {
-        "name": "Damon",
-        "points": 25,
-        "color": "#FDD400",
-        "bullet": "<?php echo base_url();?>/_assets/img/C01.png"
-    }, {
-        "name": "Patrick",
-        "points": 8,
-        "color": "#CC4748",
-        "bullet": "<?php echo base_url();?>/_assets/img/D02.png"
-    }, {
-        "name": "Mark",
-        "points": 18,
-        "color": "#67B7DC",
-        "bullet": "<?php echo base_url();?>/_assets/img/E01.png"
-    }, {
-        "name": "Mark",
-        "points": 31,
-        "color": "#448E4D",
-        "bullet": "<?php echo base_url();?>/_assets/img/H01.png"
-    }],
-    "valueAxes": [{
-        "maximum": 45,
-        "minimum": 0,
-        "axisAlpha": 0,
-        "dashLength": 4,
-        "position": "left"
-    }],
-    "startDuration": 1,
-    "graphs": [{
-        "balloonText": "<span style='font-size:13px;'>[[category]]: <b>[[value]]</b></span>",
-        "bulletOffset": 10,
-        "bulletSize": 52,
-        "colorField": "color",
-        "cornerRadiusTop": 8,
-        "customBulletField": "bullet",
-        "fillAlphas": 0.8,
-        "lineAlpha": 0,
-        "type": "column",
-        "valueField": "points"
-    }],
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginLeft": 0,
-    "marginBottom": 0,
-    "autoMargins": false,
-    "categoryField": "name",
-    "categoryAxis": {
-        "axisAlpha": 0,
-        "gridAlpha": 0,
-        "inside": true,
-        "tickLength": 0
-    },
+ 	"graphs": [
+		{
+			"balloonText": "Purchases:[[value]]",
+			"fillAlphas": 0.8,
+			"id": "AmGraph-1",
+			"lineAlpha": 0.2,
+			"title": "Purchases",
+			"type": "column",
+			"valueField": "Purchases"
+		},
+		{
+			"balloonText": "Withdrawals:[[value]]",
+			"fillAlphas": 0.8,
+			"id": "AmGraph-2",
+			"lineAlpha": 0.2,
+			"title": "Withdrawals",
+			"type": "column",
+			"valueField": "Withdrawals"
+		}
+	],
+	"guides": [],
+	"valueAxes": [
+		{
+			"id": "ValueAxis-1",
+			"position": "top",
+			"axisAlpha": 0
+		}
+	],
+	"allLabels": [],
+	"balloon": {},
+	"titles": [],
+	"dataProvider": [
+		{
+			"year": 2005,
+			"Purchases": 23.5,
+			"Withdrawals": 18.1
+		},
+		{
+			"year": 2006,
+			"Purchases": 26.2,
+			"Withdrawals": 22.8
+		},
+		{
+			"year": 2007,
+			"Purchases": 30.1,
+			"Withdrawals": 23.9
+		},
+		{
+			"year": 2008,
+			"Purchases": 29.5,
+			"Withdrawals": 25.1
+		},
+		{
+			"year": 2009,
+			"Purchases": 24.6,
+			"Withdrawals": 25
+		}
+	],
     "export": {
     	"enabled": false
      }
+
 });
 </script>
-
   </head>
 
   <body>
@@ -383,9 +274,9 @@ var chart = AmCharts.makeChart("chartdiv1",
 			
 				<div class="panel-bodyt" style="margin-top:3%;font-weight:bold;">
 					<ul class="nav nav-tabs">
-						<li class="active"><a href="<?php echo base_url();?>WMS/PO_Reports">Spares Summary</a></li>
-						<li><a href="<?php echo base_url();?>WMS/PO_Reports_1">Annual Cost</a></li>
-						<li><a href="<?php echo base_url();?>WMS/PO_Reports_2">Annual Purchases & Withdrawals</a></li>
+						<li ><a href="<?php echo base_url();?>WMS/PO_Reports">Spares Summary</a></li>
+						<li ><a href="<?php echo base_url();?>WMS/PO_Reports_1">Annual Cost</a></li>
+						<li class="active"><a href="<?php echo base_url();?>WMS/PO_Reports_2">Annual Purchases & Withdrawalss</a></li>
 						<li><a href="<?php echo base_url();?>WMS/PO_Reports_3">Top Supplier's</a></li>
 					</ul>
 
