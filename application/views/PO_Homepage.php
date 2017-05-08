@@ -111,7 +111,7 @@
                                             <th class="hidden-phone"><i class="fa fa-bookmark"></i> Category</th>
 											  <th><i class="glyphicon glyphicon-info-sign"></i> Spare Name</th>
 											  <th><center><i class="glyphicon glyphicon-import"></i>Quantity On Hand</center></th>
-											  <th><i class="glyphicon glyphicon-export"></i>Quantity On Order</th>
+											  <th><center><i class="glyphicon glyphicon-export"></i>Quantity On Order</center></th>
 											</tr>
                                     </thead>
 									
@@ -144,7 +144,7 @@
 												<center><?php echo $row->quantity_onorder." ".$row->unit_of_measurement;?></center>
 											<?php } else{?>
 											
-											<center><span class="label label-warning">On Purchase</span></center>
+											<center><span class="label label-warning">No Purchase</span></center>
 											<?php } ?>
 											</td>
 											
@@ -359,7 +359,17 @@
 									<div style="margin-left:1%;margin-top:8px;">
 										<label style="font-size:13px;font-weight:bold;">Category</label>
 										<br>
-										<input type="text" class="form-control"  name="Category" value="<?php echo $row->category;?>" placeholder="Text Here ... " required>
+									
+										<select class="form-control" name="Category"  style="font-size:13px;font-weight:bold;">  
+									
+												<option value="<?php echo $row->category;?>"><?php echo $row->category;?></option>
+												<option value="EXCITATION SYSTEM">EXCITATION SYSTEM</option>
+												<option value="GENERATOR">GENERATOR</option>
+												<option value="SWITCHGEAR">SWITCHGEAR</option>
+												<option value="MECHANICAL  SPARES">MECHANICAL  SPARES</option>
+												<option value="POWER TRANSFORMER">POWER TRANSFORMER</option>
+												<option value="STATION SERVICE SYSTEM">STATION SERVICE SYSTEM</option>
+											  </select>
 									</div>
 									<div style="margin-left:1%;margin-top:8px;">
 										<label style="font-size:13px;font-weight:bold;">Spare Name</label>
@@ -445,7 +455,15 @@
 									<div style="margin-left:1%;margin-top:8px;">
 										<label style="font-size:13px;font-weight:bold;">Category</label>
 										<br>
-										<input type="text" class="form-control"  name="Category"  required>
+										 <select class="form-control" name="Category"  style="font-size:13px;font-weight:bold;">  
+									
+												<option value="EXCITATION SYSTEM">EXCITATION SYSTEM</option>
+												<option value="GENERATOR">GENERATOR</option>
+												<option value="GENERATOR SWITCHGEAR">SWITCHGEAR</option>
+												<option value="MECHANICAL  SPARES">MECHANICAL  SPARES</option>
+												<option value="POWER TRANSFORMER">POWER TRANSFORMER</option>
+												<option value="STATION SERVICE SYSTEM">STATION SERVICE SYSTEM</option>
+											  </select>
 									</div>
 									<div style="margin-left:1%;margin-top:8px;">
 										<label style="font-size:13px;font-weight:bold;">Spare Name</label>
@@ -461,8 +479,7 @@
 									<div class="form-group" style="margin-left:1%;margin-top:8px;">
 										<label style="font-size:13px;font-weight:bold;">Unit Of Measure</label>
 										<br>
-											  <select class="form-control" name="Unit_Of_Measurement"  style="font-size:12px;">  
-									
+											  <select class="form-control" name="Unit_Of_Measurement"  style="font-size:12px;font-weight:bold;"> 
 												<option value="unit">UNIT</option>
 												<option value="lot">LOT</option>
 												<option value="set">SET</option>
@@ -539,6 +556,7 @@
 										</div>
 											<div style="width:100%;">
 											<p style="text-indent:15px;">: <?php echo $row->category;?><p>
+											
 										</div>
 										
 								

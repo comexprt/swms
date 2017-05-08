@@ -172,13 +172,15 @@
                                             <td class="hidden-phone"><center>
 											<?php if ($row->status == 'approved'){ ?>
 											<span class="label label-default" style="text-transform:capitalize;font-size:12px;">NOT SET</span>
+											<?php }elseif ($row->status == 'approved-ep'){ ?>
+											<span class="label label-default" style="text-transform:capitalize;font-size:12px;">NOT SET - EP</span>
 											<?php }else{ ?>
 											<span class="label label-danger" style="font-size:12px;"><?php echo $row->status; ?></span>
 											<?php } ?>
 											</center></td>
                                             
                                             <td><center>
-											<?php if ($row->status == 'approved'){ ?>
+											<?php if ($row->status == 'approved' || $row->status == 'approved-ep'){ ?>
 												<a  class="btn btn-success btn-xs" title="Set bidding" data-toggle="modal" data-target="#<?php echo $row->prid;?>update">
 													<i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
 													</a>

@@ -71,7 +71,7 @@
       MAIN SIDEBAR MENU
       *********************************************************************************************************************************************************** -->
       <!--sidebar start-->
-      <aside>
+       <aside>
           <div id="sidebar"  class="nav-collapse ">
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
@@ -156,7 +156,7 @@
 				  <li class="sub-menu">
                       <a href="<?php echo base_url();?>WMS/PO_Reports">
                          <i class="glyphicon glyphicon-stats"></i>
-                          <span>Statistics</span>
+                          <span>Graphs & Statistics</span>
                       </a>
                   </li>
                   
@@ -309,8 +309,10 @@
 								<p>Time : <code style="font-size:14px;"><?=date('h:i A', strtotime($row->time));?></code></p>
 								<p>Date: <code style="font-size:14px;"><?=date('F d, Y', strtotime($row->date));?></code></p>
 							</div>
-							<div class="col-xs-12">
-								<div style="border-top:1px solid #004D40;height:1px;margin:0px auto;"></div>
+							<div class="col-lg-12" style="margin-bottom:2%;">
+								<div style="border-top:2px dashed #004D40;height:1px;margin:0px auto;"></div>
+							</div>
+							<div class="col-lg-6">
 									<p style="font-weight:bold;font-size:14px;">ITEM TO BID ON <code> <?php 
 													$lastSpId = $row->prid;if($lastSpId < 10){
 													$a = "00$lastSpId";}else if ($lastSpId >= 10 && $lastSpId < 100){
@@ -318,7 +320,13 @@
 													</code>
 									</p>
 								<p style="text-transform:capitalize;font-weight:bold;margin-left:5%;"><?=$row->category.", ".$row->spare_name;?><br>- <?=$row->description;?></p>
-										
+								
+							</div><!-- col-lg-4 -->
+							<div class="col-lg-6">
+								<p style="font-weight:bold;text-decoration:underline;font-size:14px;">PRICE TO BID <p>
+												<div style="width:90%;margin-left:5%;">
+												<p><code style="font-size:14px;font-weight:bold;"> - ₱ <?=number_format($row->delivery_price,2);?></p></code>
+												</div>		
 							</div><!-- col-lg-4 -->
 							<div class='col-lg-12'>
 								<center><p>- - BIDDERS - -</p></center>

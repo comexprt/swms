@@ -105,7 +105,7 @@ var chart = AmCharts.makeChart("chartdiv",
         "dashLength": 4,
         "position": "left"
     }],
-    "startDuration": 1,
+    "startDuration": 1.5,
     "graphs": [{
         "balloonText": "<span style='font-size:13px;'>[[category]]: <b>[[value]]</b></span>",
         "bulletOffset": 10,

@@ -71,7 +71,7 @@
       MAIN SIDEBAR MENU
       *********************************************************************************************************************************************************** -->
       <!--sidebar start-->
-        <aside>
+      <aside>
           <div id="sidebar"  class="nav-collapse ">
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
@@ -91,9 +91,11 @@
                       <a href="javascript:;">
                           <i class="fa fa-envelope" aria-hidden="true" ></i>
                           <span>Spares Request</span>
-				      </a>
-                 
-					  <ul class="sub">
+				
+						  
+
+                      </a>
+                      <ul class="sub">
                           <li><a href="<?php echo base_url();?>WMS/Spare_Request">Pending
 						  <span class="label label-theme pull-right"  style="margin-right:55%;font-size:10px;">
 						  <?php foreach ($getallpendingSpareRequestCount as $row){
@@ -131,7 +133,7 @@
                   </li>
 				  
                   <li class="sub-menu">
-                      <a href="<?php echo base_url();?>WMS/Purchase_Order">
+                      <a href="<?php echo base_url();?>WMS/bids">
                           <i class="fa fa-sort-amount-desc"></i>
                           <span>Bidding</span>
                       </a>
@@ -145,7 +147,7 @@
                   </li>
                   
 					<li class="sub-menu">
-                      <a href="<?php echo base_url();?>WMS/Purchase_Order">
+                      <a href="<?php echo base_url();?>WMS/Delivery">
                           <i class="fa fa-truck"></i>
                           <span>Delivery</span>
                       </a>
@@ -154,7 +156,7 @@
 				  <li class="sub-menu">
                       <a href="<?php echo base_url();?>WMS/PO_Reports">
                          <i class="glyphicon glyphicon-stats"></i>
-                          <span>Statistics</span>
+                          <span>Graphs & Statistics</span>
                       </a>
                   </li>
                   
@@ -177,8 +179,19 @@
           		<div class="col-lg-12">
 					<div class="col-lg-12">
 							<div class='form-group'>
-							  <a><center style="font-size:17px;font-weight:bold;"><?php echo $message;?></center></a>							
+							  <a><center style="font-size:16px;font-weight:bold;"><?php echo $message;?></center></a>							
 							</div>
+							<?php  if(count($countpendingep) != 0){}else{ ?>
+							 <div class="row">
+										<div class="spare-new-left-button pull-right" style="margin-right:3%;">
+											<button class="btn btn-lg" title=""  style="font-size:14px;" data-toggle="modal" data-target="#emergencypurchase">
+												<i style="padding-right:5px;" class="fa fa-plus"></i> EMERGENCY PURCHASE 
+											</button>
+										</div>
+										
+										
+								</div><!-- col-lg-4 -->
+							<?php }?>
 						</div>
 				
 						<div class="panel-body">
@@ -228,7 +241,7 @@
                                             <td class="hidden-phone"><center><?=$iii++;?></center></td>
                                             <td class="hidden-phone"><center>AG67-PR<?php echo $b."-".$a; ?></center></td></td>
                                             <td style="text-transform:uppercase;"><?=date('F m, Y  h:i A', strtotime($row->date));?></td>
-                                            <td class="hidden-phone"><center><span class="label label-info" style="font-size:12px;"><?php echo $row->status; ?></span></center></td>
+                                            <td class="hidden-phone"><center><span class="label label-primary" style="font-size:12px;text-transform:capitalize;"><?php echo $row->status; ?></span></center></td>
                                             
                                             <td><center><form method="post" action="<?php echo base_url();?>WMS/Spare_Purchases_Info">
 												<input  type="hidden" value="<?php echo $row->prid;?>" name="prid">
@@ -268,7 +281,236 @@
 
 	  
 	  
+		<div class="modal fade" id="emergencypurchase" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog" style="width:65%;">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						    <p class="modal-title" id="myModalLabel">EMERGENCY PURCHASE</p>
+						</div>
+						
+						<div class="modal-body" style="font-size:12px;color:#00271D;">
+							<div class="row" style="width:95;margin:0px auto;">
+							<label	style="font-size:14px;font-weight:bold">
+												** PLEASE SELECT SPARES ITEM TO PURCHASE
+											</label>
+						    	<form action="<?php echo base_url();?>WMS/emergencypurchase" method="POST">
+								<input  type="hidden" value="<?=$Enduser_Name;?>" name="responsible_person">
+						 <div class="dataTable_wrapper">
+                                <table class="table table-striped table-advance table-bordered table-hover" id="dataTables-Approved">
+                                    <thead>
+                                        <tr>
+                                            <th class="col-md-1"><center>Select</center></th>
+                                            <th><center>SNN #</center></th>
+                                            <th class="hidden-phone"><i class="fa fa-bookmark"></i> Category</th>
+											  <th><i class="glyphicon glyphicon-info-sign"></i> Spare Name</th>
+											  <th><center><i class="glyphicon glyphicon-import"></i>Quantity On Hand</center></th>
+											  <th><i class="glyphicon glyphicon-export"></i>Quantity On Order</th>
+											</tr>
+                                    </thead>
+									
+                                    <tbody>
+									<?php foreach ($Categoryp as $row){ ?>
+                                        <tr class="odd gradeX">
+											<td class="col-md-1"><center>
+												<input type="checkbox" name="items[]" value="<?= $row->wsid."//".$row->delivery_price;?>"></center>
+											</td>
+											
+                                            <td><center><?php echo $row->wsid;?></center></td>
+                                            <td class="hidden-phone" style="text-indent:2%;"><?php echo $row->category;?></td>
+                                            <td>
+											<button type="button" class="btn btn-link btn-link-modal" data-toggle="modal" data-target="#<?php echo $row->wsid;?>info"><?php echo $row->spare_name;?></button>
+											</td>
+                                            
+											<td style="text-indent:1%;">
+											<?php if($row->quantity_onhand > 0){ ?>
+												<center>
+												
+												<button type="button" class="btn btn-link btn-link-modal" data-toggle="modal" 
+													data-target="#<?php echo $row->wsid; ?>sub"><?php echo $row->quantity_onhand." ".$row->unit_of_measurement; ?>
+												</button>
+												</center>
+												
+											<?php } else{ ?>
+											
+											<center><span class="label label-danger">Out Of Stock</span></center>
+											<?php } ?>
+											</td>
+											
+											<td style="text-indent:1%;">
+											<?php if($row->quantity_onorder > 0){ ?>
+												<center><?php echo $row->quantity_onorder." ".$row->unit_of_measurement;?></center>
+											<?php } else{?>
+											
+											<center><span class="label label-warning">On Purchase</span></center>
+											<?php } ?>
+											</td>
+											
+                                        </tr>
+										<?php } ?>
+                                    
+                                      
+                                      
+                                    </tbody>
+                                </table> 
+							    
+                            </div>
+								<div class="col-lg-12" style="border-top:2px dashed #004D40;margin-bottom:2%;"> 
+									
+								</div>
+								<div class="col-lg-12"> 
+									<div class="col-lg-4"> 
+										<label	style="font-size:14px;font-weight:bold">
+												Select Requisitioner :
+											</label>
+												  <select class="form-control" name="dceno"  style="font-size:13px;text-transform:capitalize;" required>  
+														<?php foreach ($getEndUserEmployee as $row){ ?>
+														<option value="<?=$row->dceno;?>"><?=$row->lname.", ".$row->fname." ".$row->mname[0].". -  ".$row->requisitioning_section;?></option>
+														<?php } ?>
+												</select>
+									</div>
+									
+									<div class="col-lg-8"> 
+										<label	style="font-size:14px;font-weight:bold">
+											Purpose :
+										</label>
+										
+										<textarea class="form-control" name="remarks" placeholder="Text Here ..." rows="4" required></textarea>
+									</div>
+								</div>
+                            <!-- /.table-responsive -->
+							</div> <!--end row-->
+						
+						
+					</div>
+				<div class="modal-footer">
+					<input type="submit" class="btn btn-primary pull-right" value="PURCHASE">
+				</div>
+				
+			</div>
+			</div>
+			</div>
+
+			 <?php foreach ($Categoryp as $row){ ?>
+			<div class="modal fade" id="<?php echo $row->wsid;?>info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						    <h4 class="modal-title" id="myModalLabel" style="font-size:14px;">Warehouse Spares Information</h4>
+						</div>
+						
+						<div class="modal-body">
+						    
+							<div class="row mt">
+								<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 spare-info spare-info1 ">
+									
+										<div class="project">
+											<div class="photo-wrapper">
+												<div class="	">
+													<!--a class="fancybox" href="assets/img/no-image-spare/system-icon.png"><img class="img-responsive" src="assets/img/portfolio/port04.jpg" alt=""></a-->
+													<img class="img-responsive" src="<?php echo base_url();?>/_assets/assets/img/no-image-spare/system-icon3.png" alt="">
+													
+												</div>
+											</div>
+											
+											
+										
+										</div>
+										<br>
+										<div class="pull-left spare-info" style="font-weight:bold;font-size:12px;" >
+											<p>On Hand</p>
+										</div>
+										<div style="width:100%;">
+											<p style="text-indent:19px;">: <?php echo $row->quantity_onhand." ".$row->unit_of_measurement;?></p>
+										</div>
+										<div class="pull-left spare-info" style="font-weight:bold;font-size:12px;" >
+											<p>On Order</p>
+										</div>
+										<div style="width:100%;">
+											<p style="text-indent:19px;">: <?php echo $row->quantity_onorder." ".$row->unit_of_measurement;?></p>
+										</div>
+									
+									
+								</div><!-- col-lg-4 -->
+								
+								<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 spare-info end-user-pr">
+										
+										<div class="pull-left spare-info" style="font-weight:bold;font-size:12px;" >
+											<p>SNN<p>
+										</div>
+										<div style="width:100%;">
+											<p style="text-indent:48px;">: <?php echo $row->wsid;?><p>
+										</div>
+										
+										<div class="pull-left spare-info" style="font-weight:bold;font-size:12px;" >
+											<p>Category<p>
+										</div>
+											<div style="width:100%;">
+											<p style="text-indent:20px;">: <?php echo $row->category;?><p>
+										</div>
+										
+								
+										<div style="padding-top:10px;">
+										</div>
+										<div class="pull-left spare-info" style="font-weight:bold;font-size:12px;" >
+											<p>Spare Name<p>
+										</div>
+										<div style="width:100%;">
+											<p style="text-indent:2px;">: <?php echo $row->spare_name;?><p>
+										</div>
+										<div class="pull-left spare-info" style="font-weight:bold;font-size:12px;" >
+											<p>Description<p>
+										</div>
+										<div style="width:100%;">
+											<p style="text-indent:5px;">: <?php echo $row->description;?><p>
+										</div>
+										<div class="pull-left spare-info" style="font-weight:bold;font-size:12px;" >
+											<p>Price</p>
+										</div>
+										<div style="width:100%;;">
+											<p style="text-indent:42px;">: <?php echo "₱ ".number_format($row->delivery_price,2);?></p>
+										</div>
+										
+										
+										
+										<div>
+											<div style="width:100%;height:2px;background-color:#24665B;">
+											</div>
+										</div>
+										<br>
+										
+										
+										<div class="pull-left spare-info" style="font-weight:bold;font-size:12px;" >
+											<p>Stock Limit</p>
+										</div>
+										<div style="width:100%;">
+											<p style="text-indent:62px;">: <?php echo $row->reordering_pt." ".$row->unit_of_measurement;?></p>
+										</div>
+									
+										
+										
+										
+										
+										
+										
+									
+								</div><!-- col-lg-4 -->
+							</div>
+							
+						</div>
+						
+						<div class="modal-footer">
+					
+					
+							<button type="button" class="btn btn-default btn-color-close" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+	 
 	  
+	  <?php }?>
 	  
       <!--footer start-->
       <footer class="site-footer">
@@ -319,6 +561,16 @@
 					responsive: true
 			});
 		});
+		
+		jQuery(function(){
+    var max = 3;
+    var checkboxes = $('input[type="checkbox"]');
+
+    checkboxes.change(function(){
+        var current = checkboxes.filter(':checked').length;
+        checkboxes.filter(':not(:checked)').prop('disabled', current >= max);
+    });
+});
     </script>
   
 

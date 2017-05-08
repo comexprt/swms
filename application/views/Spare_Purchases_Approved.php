@@ -71,7 +71,7 @@
       MAIN SIDEBAR MENU
       *********************************************************************************************************************************************************** -->
       <!--sidebar start-->
-        <aside>
+      <aside>
           <div id="sidebar"  class="nav-collapse ">
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
@@ -91,9 +91,11 @@
                       <a href="javascript:;">
                           <i class="fa fa-envelope" aria-hidden="true" ></i>
                           <span>Spares Request</span>
-				      </a>
-                 
-					  <ul class="sub">
+				
+						  
+
+                      </a>
+                      <ul class="sub">
                           <li><a href="<?php echo base_url();?>WMS/Spare_Request">Pending
 						  <span class="label label-theme pull-right"  style="margin-right:55%;font-size:10px;">
 						  <?php foreach ($getallpendingSpareRequestCount as $row){
@@ -116,7 +118,7 @@
                       </a>
 					  
                       <ul class="sub">
-                          <li ><a href="<?php echo base_url();?>WMS/Spare_Purchases">Pending
+                          <li><a href="<?php echo base_url();?>WMS/Spare_Purchases">Pending
 						  <span class="label label-theme pull-right"  style="margin-right:55%;font-size:10px;">
 						  <?php foreach ($getallpendingPurchaseRequestCount as $row){
 							echo $row->count;
@@ -131,7 +133,7 @@
                   </li>
 				  
                   <li class="sub-menu">
-                      <a href="<?php echo base_url();?>WMS/Purchase_Order">
+                      <a href="<?php echo base_url();?>WMS/bids">
                           <i class="fa fa-sort-amount-desc"></i>
                           <span>Bidding</span>
                       </a>
@@ -145,7 +147,7 @@
                   </li>
                   
 					<li class="sub-menu">
-                      <a href="<?php echo base_url();?>WMS/Purchase_Order">
+                      <a href="<?php echo base_url();?>WMS/Delivery">
                           <i class="fa fa-truck"></i>
                           <span>Delivery</span>
                       </a>
@@ -154,7 +156,7 @@
 				  <li class="sub-menu">
                       <a href="<?php echo base_url();?>WMS/PO_Reports">
                          <i class="glyphicon glyphicon-stats"></i>
-                          <span>Statistics</span>
+                          <span>Graphs & Statistics</span>
                       </a>
                   </li>
                   
@@ -231,7 +233,7 @@
                                             <td style="text-transform:uppercase;"><span style="margin-left:5%;"><?=date('F m, Y  h:i A', strtotime($row->date));?></span></td>
                                             <td style="text-transform:uppercase;"><span style="margin-left:10%;"><?=$row->fname[0].".".$row->mname[0]." ".$row->lname;?></span></td>
                                             <td class="hidden-phone"><center>
-											<?php if ($row->status == 'approved'){ ?>
+											<?php if ($row->status == 'approved' || $row->status == 'approved-ep'){ ?>
 											<span class="label label-success" style="text-transform:capitalize;font-size:12px;"><?php echo $row->status; ?></span>
 											<?php }else{ ?>
 											<span class="label label-danger" style="font-size:12px;">Bidding</span>

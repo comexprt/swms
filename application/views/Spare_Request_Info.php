@@ -75,7 +75,7 @@
       MAIN SIDEBAR MENU
       *********************************************************************************************************************************************************** -->
       <!--sidebar start-->
-      <aside>
+     <aside>
           <div id="sidebar"  class="nav-collapse ">
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
@@ -95,9 +95,11 @@
                       <a href="javascript:;" class="active">
                           <i class="fa fa-envelope" aria-hidden="true" ></i>
                           <span>Spares Request</span>
-				      </a>
-                 
-					  <ul class="sub">
+				
+						  
+
+                      </a>
+                      <ul class="sub">
                           <li class="active"><a href="<?php echo base_url();?>WMS/Spare_Request">Pending
 						  <span class="label label-theme pull-right"  style="margin-right:55%;font-size:10px;">
 						  <?php foreach ($getallpendingSpareRequestCount as $row){
@@ -135,7 +137,7 @@
                   </li>
 				  
                   <li class="sub-menu">
-                      <a href="<?php echo base_url();?>WMS/Purchase_Order">
+                      <a href="<?php echo base_url();?>WMS/bids">
                           <i class="fa fa-sort-amount-desc"></i>
                           <span>Bidding</span>
                       </a>
@@ -149,7 +151,7 @@
                   </li>
                   
 					<li class="sub-menu">
-                      <a href="<?php echo base_url();?>WMS/Purchase_Order">
+                      <a href="<?php echo base_url();?>WMS/Delivery">
                           <i class="fa fa-truck"></i>
                           <span>Delivery</span>
                       </a>
@@ -158,7 +160,7 @@
 				  <li class="sub-menu">
                       <a href="<?php echo base_url();?>WMS/PO_Reports">
                          <i class="glyphicon glyphicon-stats"></i>
-                          <span>Statistics</span>
+                          <span>Graphs & Statistics</span>
                       </a>
                   </li>
                   

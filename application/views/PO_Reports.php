@@ -55,49 +55,60 @@ var chart;
 var legend;
 var selected;
 
-var types = [{
-  type: "Transformer",
-  percent: 32,
-  color: "#FDD400",
-  subs: [{
-    type: "Corrugated",
-    percent: 8
-  }, {
-    type: "Three-Phase Pad Mounted",
-    percent: 10
-  }, {
-    type: "sample transformer",
-    percent: 14
-  }]
-}, {
-  type: "Valve",
-  percent: 45,
-  color: "#D77377",
-  subs: [{
-    type: "butterfly valve",
-    percent: 25
-  }, {
-    type: "flanged ductile iron gate",
-    percent: 18
-  }, {
-    type: "sample valve",
-    percent: 7
-  }]
-}, {
-  type: "Turbine",
-  percent: 13,
-  color: "#67B7DC",
-  subs: [{
-    type: "BOCHI synchronous",
-    percent: 13
-  }]
-}, {
-  type: "Carbon Brushes",
+var types = [
+{
+  type: "Excitation System",
   percent: 10,
-  color: "#83B762",
+  color: "#67b7dc",
   subs: [{
-    type: "copper center carbon",
-    percent: 10
+    type: "EXCITATION SYSTEM",
+    percent: 5
+  },{
+    type: "SYNCHRONIZED TRANSFORMER",
+    percent: 5
+  }]
+}, {
+  type: "Generator",
+  percent: 5,
+  color: "#d77377",
+  subs: [{
+    type: "HIGH TENSION CABLE",
+    percent: 5
+  }]
+}, {
+  type: "Mechanical Spares",
+  percent: 5,
+  color: "#660066",
+  subs: [{
+    type: "GATE VALVE",
+    percent: 5
+  }]
+},{
+  type: "Power Transformer",
+  percent: 9,
+  color: "#fdd400",
+  subs: [{
+    type: "BUSHING TRANSFORMER",
+    percent: 4
+  }, {
+    type: "Filter, Transformer",
+    percent: 5
+  }]
+}, {
+  type: "Station Services",
+  percent: 2,
+  color: "#400010",
+  subs: [{
+    type: "Inverter, 125VDC",
+    percent: 2
+  }]
+}, {
+  type: "Switchgear",
+  percent: 5,
+  color: "#83b762",
+  subs: [{
+    type: "INDUCTION MOTOR",
+    percent: 5
   }]
 }];
 
@@ -129,7 +140,7 @@ AmCharts.makeChart("chartdiv", {
 
 
   marginTop: 0,
-  marginBottom: 0,
+  marginBottom: 10,
   marginLeft: 0,
   marginRight: 0,
   pullOutRadius: 0,

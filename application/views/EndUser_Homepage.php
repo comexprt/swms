@@ -124,7 +124,7 @@
                                             <th><center>SNN #</center></th>
                                             <th class="hidden-phone"><i class="fa fa-bookmark"></i> Category</th>
 											  <th><i class="glyphicon glyphicon-info-sign"></i> Spare Name</th>
-											  <th><center><i class="glyphicon glyphicon-import"></i>Current Stock</center></th>
+											  <th><center><i class="glyphicon glyphicon-import"></i>Available Stock</center></th>
 											  <!--th><i class="glyphicon glyphicon-export"></i> On Order</th-->
 											</tr>
                                     </thead>

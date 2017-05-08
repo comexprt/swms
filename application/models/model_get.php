@@ -157,12 +157,19 @@
 		}
 		
 		function getallpendingPurchaseRequest(){
-			$query = $this->db->query("select * from purchase_request full join employee on purchase_request.dceno = employee.dceno where status = 'pending' AND prid > 0");		   
+			$query = $this->db->query("select * from purchase_request full join employee on purchase_request.dceno = employee.dceno where status in ('pending','pending-ep') AND prid > 0");		   
 			$result = $query->result();
 		    return $result;  	
 		}
+		
+		function countpendingep(){
+			$query = $this->db->query("select * from purchase_request full join employee on purchase_request.dceno = employee.dceno where status = 'pending-ep' AND prid > 0");		   
+			$result = $query->result();
+		    return $result;  	
+		}
+		
 		function getallapprovedPurchaseRequest(){
-			$query = $this->db->query("select * from purchase_request full join employee on purchase_request.dceno = employee.dceno where status in ('approved','on bid') AND prid > 0");		   
+			$query = $this->db->query("select * from purchase_request full join employee on purchase_request.dceno = employee.dceno where status in ('approved','on bid','approved-ep') AND prid > 0");		   
 			$result = $query->result();
 		    return $result;  	
 		}
@@ -170,6 +177,12 @@
 		
 		function getallpendingSpareRequestCount(){
 			$query = $this->db->query("select count(*) as count from withdrawal_request join employee on withdrawal_request.dceno = employee.dceno where status = 'Pending'");		   
+			$result = $query->result();
+		    return $result;  	
+		}
+		
+		function countitemspurchaserequest($data){
+			$query = $this->db->query("select count(*) as count from purchase_request_details where prid = ".$data."");		   
 			$result = $query->result();
 		    return $result;  	
 		}
@@ -590,12 +603,16 @@
 			$query = $this->db->query("update purchase_request_details set qty = '".$data."' where prid ='".$data1."' AND wsid ='".$data2."'");		   
 		}
 		
+		function deleteepitem($data1,$data2){	
+			$query = $this->db->query("delete from purchase_request_details where prid ='".$data1."' AND wsid ='".$data2."'");		   
+		}
+		
 		function updateqtyaccepted($data,$data1){	
 			$query = $this->db->query("update delivery_details set qty_accepted = ".$data.", qty_available = ".$data." where ddid =".$data1."");		   
 		}
 		
 		function updatestatuspurchaserequest($data,$data1,$data2,$data3,$data4){	
-			$query = $this->db->query("update purchase_request set status = '".$data."',person_responsible = '".$data1."',remark = '".$data3."',dceno = '".$data4."',date_status_changed = current_timestamp where prid ='".$data2."' ");		   
+			$query = $this->db->query("update purchase_request set status = '".$data."',person_responsible = '".$data1."',remark = '".$data3."',dceno = ".$data4.",date_status_changed = current_timestamp where prid =".$data2."");		   
 		}
 		
 		public function getEndUserEmployee(){
@@ -606,6 +623,12 @@
 		
 		public function getLastBid(){
 			$query = $this->db->query("select * from bidding order by bid desc LIMIT 1");		   
+			$result = $query->result();
+		    return $result;  		
+		}
+		
+		public function getLastprid(){
+			$query = $this->db->query("select prid from purchase_request order by prid desc LIMIT 1");		   
 			$result = $query->result();
 		    return $result;  		
 		}
@@ -651,7 +674,7 @@
 		}
 		
 		public function getBidInfo(){
-			$query = $this->db->query("select bidding.bid, bidding.date as date,bidding.time,bidding.venue,bidding.status,bidding.date_status_changed, bidding.person_responsible,bidding.wsid, bidding.prid,warehouse_spares.category, warehouse_spares.spare_name,warehouse_spares.description, warehouse_spares.unit_of_measurement,purchase_request.date as prid_date from bidding join warehouse_spares on bidding.wsid = warehouse_spares.wsid join purchase_request on bidding.prid = purchase_request.prid order by bidding.date desc,bidding.time desc");		   
+			$query = $this->db->query("select bidding.bid, bidding.date as date,bidding.time,bidding.venue,bidding.status,bidding.date_status_changed, bidding.person_responsible,bidding.wsid, bidding.prid,warehouse_spares.category, warehouse_spares.spare_name,warehouse_spares.description, warehouse_spares.delivery_price, warehouse_spares.unit_of_measurement,purchase_request.date as prid_date from bidding join warehouse_spares on bidding.wsid = warehouse_spares.wsid join purchase_request on bidding.prid = purchase_request.prid order by bidding.date desc,bidding.time desc");		   
 			$result = $query->result();
 		    return $result;  		
 		}
@@ -719,6 +742,16 @@
 		public function set_delivery($data,$data1){	
 			$query = $this->db->query("INSERT INTO delivery(date_delivered,received_by,remarks,total_amount,sdceno,status,date_completed,poid) 
 										VALUES (current_date,'','',0,".$data.",'on inspection',null,".$data1.")");		   
+		}
+		
+		public function set_emergency_purchase($data,$data1,$data2){	
+			$query = $this->db->query("INSERT INTO purchase_request(date,remark,status,date_status_changed,person_responsible,dceno) 
+										VALUES (current_date,'".$data."','pending-ep',current_date,'".$data1."',".$data2.")");		   
+		}
+		
+		public function set_emergency_purchase_details($data,$data1,$data2){	
+			$query = $this->db->query("INSERT INTO purchase_request_details(qty,estimated_cost,prid,wsid) 
+										VALUES (3,".$data.",".$data1.",".$data2.")");		   
 		}
 		
 		public function set_delivery_details($data,$data1,$data2,$data3){	

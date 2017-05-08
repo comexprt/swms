@@ -121,7 +121,7 @@
               <!-- sidebar menu end-->
           </div>
       </aside><?php }else{ ?>
-	  <aside class="noprint">
+	   <aside class="noprint">
           <div id="sidebar"  class="nav-collapse ">
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
@@ -206,7 +206,7 @@
 				  <li class="sub-menu">
                       <a href="<?php echo base_url();?>WMS/PO_Reports">
                          <i class="glyphicon glyphicon-stats"></i>
-                          <span>Statistics</span>
+                          <span>Graphs & Statistics</span>
                       </a>
                   </li>
                   

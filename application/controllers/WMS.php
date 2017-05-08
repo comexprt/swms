@@ -2109,6 +2109,8 @@ class WMS extends CI_Controller {
 			// 
 			$data['Categoryp'] = $this->model_get->getCategory();
 			$data['Draftp'] = $this->model_get->getallpendingPurchaseRequest();
+			$data['countpendingep'] = $this->model_get->countpendingep();
+			$data['getEndUserEmployee'] = $this->model_get->getEndUserEmployee();
 			$data['Draft1p'] = $this->model_get->getallnotpendingPurchaseRequest();
 			
 			
@@ -2201,9 +2203,7 @@ class WMS extends CI_Controller {
 			$data['Position'] = "$Position";
 			$data['CcNo'] = "$CcNo";
 			$data['Section'] = "$Section";
-		    
-			
-		
+		    	
 			$data['getallpendingSpareRequestCount'] = $this->model_get->getallpendingSpareRequestCount();
 			$data['getallpendingPurchaseRequestCount'] = $this->model_get->getallpendingPurchaseRequestCount();
 			// 
@@ -2831,12 +2831,23 @@ public function Spare_Purchases_Info(){
 			
 				$data['PurchaseInfo'] = $this->model_get->Spare_Purchase_Details($prid);
 				$data['DraftInfo'] = $this->model_get->getSpecificPurchase($prid);
+				$result = $this->model_get->countitemspurchaserequest($prid);
+				if($result){ $Id_array = array();foreach($result as $row){$Id_array = array( 'count' => $row->count);}}else{} $count = $Id_array ['count'];
+				if($count==0){
+					$max_limit = 3;
+				}elseif($count==1){
+					$max_limit = 2;
+				}elseif($count==2){
+					$max_limit = 1;
+				}else{$max_limit = 0;} 
 				
 				$data['getallpendingSpareRequestCount'] = $this->model_get->getallpendingSpareRequestCount();
 				$data['getallpendingPurchaseRequestCount'] = $this->model_get->getallpendingPurchaseRequestCount();
 				$data['getEndUserEmployee'] = $this->model_get->getEndUserEmployee();
 				$data['Category'] = $this->model_get->getCategory();
 				$data['getvat'] = $this->model_get->getvat();
+				$data['max_limit'] = $max_limit;
+				$data['current_prid'] = $prid;
 				
 				$this->load->view('Spare_Purchases_info',$data);
 	
@@ -3075,6 +3086,7 @@ public function Spare_Purchases_Info(){
 		$wsid = $this->input->post('wsid');
 		$qty = $this->input->post('qty');
 
+		
 		$this->model_get->set_bid($date,$time,$venue,$responsible_person,$wsid,$prid);
 		$result = $this->model_get->getLastBid();
 		if($result){ $Id_array = array();foreach($result as $row){$Id_array = array( 'bid' => $row->bid);}}else{} $LastSpId = $Id_array ['bid'];
@@ -3112,7 +3124,7 @@ public function updatestatus(){
 		  
 			 
 			$this->model_get->updatestatuspurchaserequest($status,$responsible_person,$prid,$remarks,$dceno);
-			if ($status == 'approved'){
+			if ($status == 'approved' || $status == 'approved-ep'){
 				$message="Purchase Request has been Approved";
 				$this->session->set_flashdata('message',"$message");
 				$this->session->set_flashdata('action',"add-spare");
@@ -3123,6 +3135,33 @@ public function updatestatus(){
 				$this->session->set_flashdata('action',"add-spare");
 				redirect('WMS/Spare_Purchases');	
 			}
+			//print_r($newRow);
+		}else
+			{
+				//If no session, redirect to login page
+				redirect('WMS/InvalidURL');
+			}
+	
+	}
+	
+	public function deleteepitem(){
+
+		if($this->session->userdata('logged_EU') || $this->session->userdata('logged_PO')){
+		  
+		
+		  $prid = $this->input->post('prid');
+		  $wsid = $this->input->post('wsid');
+		  
+		
+			$this->model_get->deleteepitem($prid,$wsid);
+			 
+				
+			$message="Spare Items Has been Removed ...";
+			
+			$this->session->set_flashdata('action',"qty");
+			$this->session->set_flashdata('prid',"$prid");
+			$this->session->set_flashdata('message',"$message");
+			redirect('WMS/Spare_Purchases_Info');	
 			//print_r($newRow);
 		}else
 			{
@@ -3146,6 +3185,68 @@ public function updatestatus(){
 			 
 				
 			$message="Quantity to be purchase has been updated";
+			
+			$this->session->set_flashdata('action',"qty");
+			$this->session->set_flashdata('prid',"$prid");
+			$this->session->set_flashdata('message',"$message");
+			redirect('WMS/Spare_Purchases_Info');	
+			//print_r($newRow);
+		}else
+			{
+				//If no session, redirect to login page
+				redirect('WMS/InvalidURL');
+			}
+	
+	}
+	
+	public function emergencypurchase(){
+
+		if($this->session->userdata('logged_EU') || $this->session->userdata('logged_PO')){
+		  
+		  $dceno = $this->input->post('dceno');
+		  $remarks = $this->input->post('remarks');
+		  $responsible_person = $this->input->post('responsible_person');
+		  
+			$this->model_get->set_emergency_purchase($remarks,$responsible_person,$dceno);
+			
+			$result=$this->model_get->getLastprid($qty,$prid,$wsid);if($result){ $Id_array = array();foreach($result as $row){$Id_array = array('prid' => $row->prid);}}else{}			
+			$LastSpId = $Id_array ['prid'];if($LastSpId <= 0){$prid = 1;}else{$prid = $LastSpId + 1;}
+			
+			$item_array=$this->input->post('items');
+			$arrlength = count($item_array);
+			for($x = 0; $x < $arrlength; $x++) 
+			{
+				$separate_name=explode('//',$item_array[$x]);
+				$this->model_get->set_emergency_purchase_details($separate_name[1],$LastSpId,$separate_name[0]);
+			}
+			$message="Emergency Puchase Has Been Creaed ...";
+			
+			$this->session->set_flashdata('action',"qty");
+			$this->session->set_flashdata('prid',"$LastSpId");
+			$this->session->set_flashdata('message',"$message");
+			redirect('WMS/Spare_Purchases_Info');	
+			//print_r($newRow);
+		}else
+			{
+				//If no session, redirect to login page
+				redirect('WMS/InvalidURL');
+			}
+	
+	}
+	
+	public function sparesemergencypurchase(){
+
+		if($this->session->userdata('logged_EU') || $this->session->userdata('logged_PO')){
+		  
+		 	 $prid = $this->input->post('prid');
+			$item_array=$this->input->post('items');
+			$arrlength = count($item_array);
+			for($x = 0; $x < $arrlength; $x++) 
+			{
+				$separate_name=explode('//',$item_array[$x]);
+				$this->model_get->set_emergency_purchase_details($separate_name[1],$prid,$separate_name[0]);
+			}
+			$message="Spares Has Been Added ...";
 			
 			$this->session->set_flashdata('action',"qty");
 			$this->session->set_flashdata('prid',"$prid");

@@ -106,9 +106,11 @@
                       <a href="javascript:;">
                           <i class="fa fa-envelope" aria-hidden="true" ></i>
                           <span>Spares Request</span>
-				      </a>
-                 
-					  <ul class="sub">
+				
+						  
+
+                      </a>
+                      <ul class="sub">
                           <li><a href="<?php echo base_url();?>WMS/Spare_Request">Pending
 						  <span class="label label-theme pull-right"  style="margin-right:55%;font-size:10px;">
 						  <?php foreach ($getallpendingSpareRequestCount as $row){
@@ -146,7 +148,7 @@
                   </li>
 				  
                   <li class="sub-menu">
-                      <a href="<?php echo base_url();?>WMS/Purchase_Order">
+                      <a href="<?php echo base_url();?>WMS/bids">
                           <i class="fa fa-sort-amount-desc"></i>
                           <span>Bidding</span>
                       </a>
@@ -160,7 +162,7 @@
                   </li>
                   
 					<li class="sub-menu">
-                      <a href="<?php echo base_url();?>WMS/Purchase_Order">
+                      <a href="<?php echo base_url();?>WMS/Delivery">
                           <i class="fa fa-truck"></i>
                           <span>Delivery</span>
                       </a>
@@ -169,7 +171,7 @@
 				  <li class="sub-menu">
                       <a href="<?php echo base_url();?>WMS/PO_Reports">
                          <i class="glyphicon glyphicon-stats"></i>
-                          <span>Statistics</span>
+                          <span>Graphs & Statistics</span>
                       </a>
                   </li>
                   
@@ -388,7 +390,7 @@
 						
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 noprint">
 						
-						<?php if($row->status == 'approved'){ ?>
+						<?php if($row->status == 'approved' || $row->status == 'approved-ep'){ ?>
 							<a class="btn btn-xs" style="border:1px solid #D90000;font-size:20px;font-weight:bold;float:right;color:#D90000;margin-right:1%;" title="Cancel Approved Purchase Request" data-toggle="modal" data-target="#<?php echo $row->prid;?>update">
 							<code style="background-color:#FFFFFF;color:#D90000;"> Cancel</code>
 							</a>
@@ -407,7 +409,7 @@
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 spare-info spare-info1 spare-new-left-button" style="margin-top:20px;">
 							<h4 style="float:left;font-weight:bold;margin-top:4px;width:130px;">Evaluation  </h4><button style="text-transform:capitalize;font-size:15px;border-radius:8px;float:left;" title="Evaluation">
 					
-							<?php if ($row->status == 'approved'){ echo $row->status;}else{ ?> Bidding <?php } ?>
+							<?php if ($row->status == 'approved' || $row->status == 'approved-ep'){ echo $row->status;}else{ ?> Bidding <?php } ?>
 							</button>
 						</div><!-- col-lg-4 -->
 						

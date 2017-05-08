@@ -196,6 +196,11 @@
 												<div style="width:90%;margin-left:5%;">
 												<p><code style="font-size:14px;"> - <?=$row->description;?></p></code>
 												</div>
+												
+									<p style="font-weight:bold;text-decoration:underline;font-size:15px;">PRICE TO BID <p>
+												<div style="width:90%;margin-left:5%;">
+												<p><code style="font-size:14px;font-weight:bold;"> - ₱ <?=number_format($row->delivery_price,2);?></p></code>
+												</div>
 									
 								</div><!-- col-lg-4 -->
 								<div class="col-xs-6">
