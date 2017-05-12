@@ -42,7 +42,7 @@
 	<style>
 	#chartdiv,#chartdiv1,#chartdiv2,#chartdiv3{
 		width		: 100%;
-		height		: 500px;
+		height		: 300px;
 		font-size	: 14px;
 		font-weight :bold;
 	}
@@ -100,29 +100,14 @@ var chart = AmCharts.makeChart("chartdiv", {
 	"titles": [],
 	"dataProvider": [
 		{
-			"year": 2005,
-			"Purchases": 23.5,
-			"Withdrawals": 18.1
+			"year": 2016,
+			"Purchases": 4,
+			"Withdrawals": 2
 		},
 		{
-			"year": 2006,
-			"Purchases": 26.2,
-			"Withdrawals": 22.8
-		},
-		{
-			"year": 2007,
-			"Purchases": 30.1,
-			"Withdrawals": 23.9
-		},
-		{
-			"year": 2008,
-			"Purchases": 29.5,
-			"Withdrawals": 25.1
-		},
-		{
-			"year": 2009,
-			"Purchases": 24.6,
-			"Withdrawals": 25
+			"year": 2017,
+			"Purchases": 15,
+			"Withdrawals": 11
 		}
 	],
     "export": {

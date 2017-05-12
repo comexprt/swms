@@ -66,14 +66,17 @@ var types = [
   },{
     type: "SYNCHRONIZED TRANSFORMER",
     percent: 5
+  },{
+    type: "PWL- DIGITAL CONTROLLER",
+    percent: 2
   }]
 }, {
   type: "Generator",
-  percent: 5,
+  percent: 6,
   color: "#d77377",
   subs: [{
     type: "HIGH TENSION CABLE",
-    percent: 5
+    percent: 6
   }]
 }, {
   type: "Mechanical Spares",
@@ -81,18 +84,21 @@ var types = [
   color: "#660066",
   subs: [{
     type: "GATE VALVE",
-    percent: 5
+    percent: 2
+  },{
+    type: "Bushing Wicket Gate",
+    percent: 3
   }]
 },{
   type: "Power Transformer",
-  percent: 9,
+  percent: 6,
   color: "#fdd400",
   subs: [{
     type: "BUSHING TRANSFORMER",
-    percent: 4
+    percent: 3
   }, {
     type: "Filter, Transformer",
-    percent: 5
+    percent: 3
   }]
 }, {
   type: "Station Services",
@@ -104,11 +110,11 @@ var types = [
   }]
 }, {
   type: "Switchgear",
-  percent: 5,
+  percent: 6,
   color: "#83b762",
   subs: [{
     type: "INDUCTION MOTOR",
-    percent: 5
+    percent: 6
   }]
 }];
 

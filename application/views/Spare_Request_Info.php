@@ -427,7 +427,7 @@
 											<p>Description<p>
 										</div>
 										<div style="width:100%;">
-											<p style="text-indent:5px;">: <?php echo $row->Description;?><p>
+											<p style="text-indent:5px;">: <?php echo $row->description;?><p>
 										</div>
 									
 										

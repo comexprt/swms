@@ -216,7 +216,6 @@
                                         <tr>
                                             <th class="hidden-phone"><center>No.</center></th>
                                             <th class="hidden-phone"><center>PR No.</center></th>
-											<th class="hidden-phone" ><i class="fa fa-calendar" style="margin-left:12%;"></i> DATE CREATED</th>
                                             <th><center><i class="glyphicon glyphicon-user"></i>STATUS</center></th>
 											  <th><center><i class="fa fa-eye"></i> VIEW</center></th>
 											</tr>
@@ -240,7 +239,6 @@
 										
                                             <td class="hidden-phone"><center><?=$iii++;?></center></td>
                                             <td class="hidden-phone"><center>AG67-PR<?php echo $b."-".$a; ?></center></td></td>
-                                            <td style="text-transform:uppercase;"><?=date('F m, Y  h:i A', strtotime($row->date));?></td>
                                             <td class="hidden-phone"><center><span class="label label-primary" style="font-size:12px;text-transform:capitalize;"><?php echo $row->status; ?></span></center></td>
                                             
                                             <td><center><form method="post" action="<?php echo base_url();?>WMS/Spare_Purchases_Info">

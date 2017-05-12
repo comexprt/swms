@@ -62,7 +62,7 @@ var chart = AmCharts.makeChart("chartdiv",
 		$to_explode = "Ched Coco Lumber & Construction Supply";
 		$name=explode(' ',$to_explode)?>
         "name": "<?=$name[0]." ".$name[1];?>",
-        "points": 10,
+        "points": 5,
         "color": "#98A3BA",
         "bullet": "<?php echo base_url();?>/_assets/img/F01.png"
     }, {
@@ -70,7 +70,7 @@ var chart = AmCharts.makeChart("chartdiv",
 		$to_explode = "Loremar Construction Supply";
 		$name=explode(' ',$to_explode)?>
         "name": "<?=$name[0]." ".$name[1];?>",
-        "points": 25,
+        "points": 3,
         "color": "#FDD400",
         "bullet": "<?php echo base_url();?>/_assets/img/C01.png"
     }, {
@@ -78,7 +78,7 @@ var chart = AmCharts.makeChart("chartdiv",
 		$to_explode = "Ompad IT-Services";
 		$name=explode(' ',$to_explode)?>
         "name": "<?=$name[0]." ".$name[1];?>",
-        "points": 8,
+        "points": 2,
         "color": "#CC4748",
         "bullet": "<?php echo base_url();?>/_assets/img/D02.png"
     }, {
@@ -86,7 +86,7 @@ var chart = AmCharts.makeChart("chartdiv",
 		$to_explode = "Qualitron Contruction & Industrial Supplies";
 		$name=explode(' ',$to_explode)?>
         "name": "<?=$name[0]." ".$name[1];?>",
-        "points": 18,
+        "points": 3,
         "color": "#67B7DC",
         "bullet": "<?php echo base_url();?>/_assets/img/E01.png"
     }, {
@@ -94,12 +94,12 @@ var chart = AmCharts.makeChart("chartdiv",
 		$to_explode = "Trinity Blocks & Construction Supply";
 		$name=explode(' ',$to_explode)?>
         "name": "<?=$name[0]." ".$name[1];?>",
-        "points": 31,
+        "points": 2,
         "color": "#448E4D",
         "bullet": "<?php echo base_url();?>/_assets/img/H01.png"
     }],
     "valueAxes": [{
-        "maximum": 45,
+        "maximum": 6,
         "minimum": 0,
         "axisAlpha": 0,
         "dashLength": 4,

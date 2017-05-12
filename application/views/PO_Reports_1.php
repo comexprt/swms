@@ -68,21 +68,16 @@ var chart = AmCharts.makeChart( "chartdiv", {
     "color": "#FFFFFF"
   },
 
-  "dataProvider": [ {
-    "year": 2009,
-    "Total Cost": 10000
+  "dataProvider": [
+     {	
+    "year": 2015,
+    "Total Cost": 1200500
   }, {
-    "year": 2010,
-    "Total Cost": 2000000
-  }, {	
-    "year": 2011,
-    "Total Cost": 25000
+    "year": 2016,
+    "Total Cost": 1948000
   }, {
-    "year": 2012,
-    "Total Cost": 325000
-  }, {
-    "year": 2013,
-    "Total Cost": 189000,
+    "year": 2017,
+    "Total Cost": 898882,
     "dashLengthLine": 5
   } ],
   "valueAxes": [ {

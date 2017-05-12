@@ -1,7 +1,7 @@
 <?php
 
+	 date_default_timezone_set('asia/manila');
 	class Model_get extends CI_Model{
-
 	/******* log-in administrator ******/
 		
 		function loginAdmin($username, $password){

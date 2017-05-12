@@ -582,19 +582,7 @@
 						
 						
 					</div>
-				<div class="modal-footer">
-							
-							<?php //registration button
-									if ($row->quantity_onhand <= 0){
-									
-									}else{
-									
-								
-									echo form_submit("loginSubmit","OK","class='btn btn-success'");
-									echo form_close();
-									}
-							?>
-				</div>
+				
 				<div class="modal-footer">
 							<?php //registration button
 								

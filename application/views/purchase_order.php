@@ -239,7 +239,6 @@
                                     <thead>
                                         <tr>
                                             <th class="hidden-phone" ><center>PO No.</center></th>
-											<th class="hidden-phone" ><i class="fa fa-calendar" style="margin-left:12%;"></i> DATE APPROVED</th>
 											<th class="hidden-phone" ><i class="fa fa-child" style="margin-left:5%;"></i> AWARDED</th>	
                                             <th><center><i class="fa fa-money"></i> PO AMOUNT</center></th>
 											 <th><i class="fa fa-eye" style="margin-left:20%;"></i>View</th>
@@ -266,7 +265,7 @@
 													echo $a;
 											?>
 											</center></td>
-                                            <td style="text-transform:capitalize;"><span style="margin-left:8%;"><?=date('F m, Y', strtotime($row->date_approved));?></span></td>
+                                           
                                             <td style="text-transform:capitalize;"><span style="margin-left:8%;"><?=$row->supplier_name;?></span></td>
                                             <td style="text-transform:capitalize;"><span class="pull-right" style="margin-right:15%;">₱ <?=number_format($row->po_amount,2);?></span></td>
                                                                      

@@ -537,7 +537,7 @@ class WMS extends CI_Controller {
 			if ($Section == "AGUS 7 HEP"){
 				$sectionId = 3;
 			}else {
-				$sectionId = 4;
+				$sectionId = 3;
 				
 			}
 		
@@ -646,7 +646,7 @@ class WMS extends CI_Controller {
 			if ($Section == "AGUS 7 HEP"){
 				$sectionId = 3;
 			}else {
-				$sectionId = 4;
+				$sectionId = 3;
 				
 			}
 			
@@ -757,7 +757,7 @@ class WMS extends CI_Controller {
 			if ($Section == "AGUS 7 HEP"){
 				$sectionId = 3;
 			}else {
-				$sectionId = 4;
+				$sectionId = 3;
 				
 			}
 			
@@ -868,7 +868,7 @@ class WMS extends CI_Controller {
 			if ($Section == "AGUS 7 HEP"){
 				$sectionId = 3;
 			}else {
-				$sectionId = 4;
+				$sectionId = 3;
 				
 			}
 		

@@ -242,22 +242,7 @@
 										
 										
 								</div><!-- col-lg-4 -->
-									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 spare-info spare-info1">
-										
-										<div class="spare-left-purpose">
-											<label>Date Created <p></label>
-										</div>
-										<div class="spare-right-purpose">
-											<p>: 
-											<?php 
-												$purpose = $row->remark;
-												echo date('F m, Y h:i A', strtotime($row->date));
-											?>
-											<p>
-										</div>
-										
-										
-								</div><!-- col-lg-4 -->
+									
 								
 								
 								

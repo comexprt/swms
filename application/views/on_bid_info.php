@@ -180,13 +180,7 @@
 											<label><p style="font-weight:bold;">Requisitioning Section : AGUS 6/7 HE PLANT</p></label>
 										</div>
 										
-										<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-right">
-											<label><p style="font-weight:bold;">Date Prepared : : 
-											<?php 
-												$purpose = $row->remark;
-												echo date('F m, Y h:i A', strtotime($row->date));
-											?></p></label>
-										</div>
+										
 										<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" >
 											<label><p style="font-weight:bold;">Cost Centre Number : 60004</p></label>
 										</div>	

@@ -205,7 +205,6 @@
                                         <tr>
                                             <th class="hidden-phone"><center>No.</center></th>
                                             <th class="hidden-phone"><center>PR No.</center></th>
-											<th class="hidden-phone" ><i class="fa fa-calendar" style="margin-left:12%;"></i> DATE CREATED</th>
 											<th class="hidden-phone" ><i class="fa fa-calendar" style="margin-left:5%;"></i> REQUISITIONER</th>
                                             <th><center><i class="glyphicon glyphicon-user"></i>STATUS</center></th>
 											  <th><center><i class="fa fa-eye"></i> VIEW</center></th>
@@ -230,7 +229,7 @@
 										
                                             <td class="hidden-phone"><center><?=$iii++;?></center></td>
                                             <td class="hidden-phone"><center>AG67-PR<?php echo $b."-".$a; ?></center></td></td>
-                                            <td style="text-transform:uppercase;"><span style="margin-left:5%;"><?=date('F m, Y  h:i A', strtotime($row->date));?></span></td>
+                                          
                                             <td style="text-transform:uppercase;"><span style="margin-left:10%;"><?=$row->fname[0].".".$row->mname[0]." ".$row->lname;?></span></td>
                                             <td class="hidden-phone"><center>
 											<?php if ($row->status == 'approved' || $row->status == 'approved-ep'){ ?>
